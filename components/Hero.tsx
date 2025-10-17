@@ -7,13 +7,13 @@ import Image from 'next/image';
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden hero-pattern">
-      <div className="absolute inset-0 bg-gradient-to-br from-white via-red-50/20 to-gray-50/30"></div>
+      <div className="absolute inset-0 bg-white"></div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-20">
         <div className="text-center max-w-4xl mx-auto animate-fade-in">
           {/* Logo */}
           <div className="mb-8 flex justify-center">
-            <div className="relative w-80 h-80 bg-white rounded-full shadow-xl p-8 flex items-center justify-center">
+            <div className="relative w-48 h-48 bg-white rounded-full shadow-xl p-6 flex items-center justify-center">
               <div className="relative w-full h-full">
                 <Image
                   src="/logo.png"

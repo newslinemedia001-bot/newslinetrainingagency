@@ -18,6 +18,7 @@ interface FormData {
   availability: string;
   duration: string;
   coverLetter: string;
+  consent: boolean;
 }
 
 export default function ApplicationForm() {
@@ -33,6 +34,7 @@ export default function ApplicationForm() {
     availability: '',
     duration: '',
     coverLetter: '',
+    consent: false,
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -43,10 +45,12 @@ export default function ApplicationForm() {
   const selectedCategory = categories.find(cat => cat.id === formData.category);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
+    const { name, value, type } = e.target;
+    const checked = (e.target as HTMLInputElement).checked;
+    
     setFormData(prev => ({
       ...prev,
-      [name]: value,
+      [name]: type === 'checkbox' ? checked : value,
       // Reset subcategory if category changes
       ...(name === 'category' ? { subcategory: '' } : {})
     }));
@@ -103,6 +107,7 @@ export default function ApplicationForm() {
           availability: '',
           duration: '',
           coverLetter: '',
+          consent: false,
         });
         setFlexibleWeeks('');
       } else {
@@ -353,6 +358,23 @@ export default function ApplicationForm() {
                   className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all resize-none"
                   placeholder="Tell us about yourself, your skills, and why you're interested in this attachment..."
                 />
+              </div>
+
+              {/* Consent Checkbox */}
+              <div className="md:col-span-2">
+                <label className="flex items-start space-x-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    name="consent"
+                    required
+                    checked={formData.consent}
+                    onChange={handleChange}
+                    className="mt-1 w-5 h-5 text-red-600 border-gray-300 rounded focus:ring-red-500 focus:ring-2 cursor-pointer"
+                  />
+                  <span className="text-sm text-gray-700">
+                    I consent to Newsline Training Agency collecting and storing my personal information for the purpose of processing my attachment application. I understand that my data will be handled in accordance with privacy regulations. *
+                  </span>
+                </label>
               </div>
             </div>
 

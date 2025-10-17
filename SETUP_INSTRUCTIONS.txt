@@ -1,0 +1,74 @@
+QUICK SETUP - DO THESE 3 THINGS:
+
+1. UPDATE FIRESTORE RULES (Firebase Console → Firestore → Rules):
+   Copy-paste this:
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Users collection (for auth system)
+    match /users/{userId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Applications collection (your original working rules)
+    match /applications/{document=**} {
+      // Authenticated users can do everything
+      allow read, write, update, delete: if request.auth != null;
+      
+      // Unauthenticated users (guests) can create and read only
+      allow create, read: if request.auth == null;
+    }
+
+    // Messages collection (for admin-to-student messaging)
+    match /messages/{messageId} {
+      allow read, update: if request.auth != null && request.auth.uid == resource.data.to;
+      allow create: if request.auth != null;
+    }
+
+    // Default rule for all other collections
+    match /{document=**} {
+      allow read, write: if request.auth != null;
+      allow read: if request.auth == null;
+    }
+  }
+}
+
+2. ADD CLOUDINARY TO .env.local:
+   NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=dlvgrs5vp
+   NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=newslinetrainingagency
+
+3. TEST THE SYSTEM:
+   - Go to /auth/signup → Create student account
+   - Go to /auth/signup → Create company account
+   - Login as student → See dashboard
+   - Login as company → See company dashboard
+   - Login as admin → Go to /admin/enhanced for new features
+
+WHAT'S NEW:
+✅ Sign up/Sign in with role selection (Student/Company)
+✅ Google Sign-In integration
+✅ Student dashboard (/dashboard) - see applications & messages
+✅ Company dashboard (/company) - review assigned students
+✅ Enhanced admin (/admin/enhanced) - assign students to companies, send messages
+✅ Header shows Dashboard button when logged in
+✅ Consent checkbox in application form
+✅ WhatsApp links added
+
+ADMIN FEATURES:
+- Change application status: Applied → Review → Approved/Rejected
+- Assign students to companies
+- Send messages to students (shows in their dashboard)
+- View all applications
+
+COMPANY FEATURES:
+- View assigned students
+- Approve/Reject students
+- Send feedback to admin
+
+STUDENT FEATURES:
+- View application status
+- Receive messages from admin
+- Track application progress
