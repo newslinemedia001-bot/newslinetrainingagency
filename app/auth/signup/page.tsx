@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useAuth } from '@/lib/auth-context';
-import { User, Building2, Mail, Lock, UserCircle, Phone, Loader2 } from 'lucide-react';
+import { User, Building2, Mail, Lock, UserCircle, Phone, Loader2, MapPin, Globe, Briefcase } from 'lucide-react';
 
 export default function SignUpPage() {
   const [step, setStep] = useState<'role' | 'details'>('role');
@@ -17,6 +17,10 @@ export default function SignUpPage() {
     confirmPassword: '',
     phone: '',
     companyName: '',
+    website: '',
+    location: '',
+    industry: '',
+    description: '',
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -50,9 +54,11 @@ export default function SignUpPage() {
       return;
     }
 
-    if (role === 'company' && !formData.companyName) {
-      setError('Company name is required');
-      return;
+    if (role === 'company') {
+      if (!formData.companyName || !formData.industry || !formData.location || !formData.phone) {
+        setError('Please fill all required company fields');
+        return;
+      }
     }
 
     setLoading(true);
@@ -63,7 +69,13 @@ export default function SignUpPage() {
         formData.password,
         formData.name,
         role!,
-        role === 'company' ? formData.companyName : undefined
+        role === 'company' ? {
+          companyName: formData.companyName,
+          industry: formData.industry,
+          location: formData.location,
+          website: formData.website,
+          phone: formData.phone
+        } : undefined
       );
 
       // Redirect based on role
@@ -209,25 +221,98 @@ export default function SignUpPage() {
                 </div>
               </div>
 
-              {/* Company Name (if company) */}
+              {/* Company Fields */}
               {role === 'company' && (
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Company/Organization Name *
-                  </label>
-                  <div className="relative">
-                    <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
-                    <input
-                      type="text"
-                      name="companyName"
-                      required
-                      value={formData.companyName}
-                      onChange={handleChange}
-                      className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none"
-                      placeholder="Enter company name"
-                    />
+                <>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Company/Organization Name *
+                    </label>
+                    <div className="relative">
+                      <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                      <input
+                        type="text"
+                        name="companyName"
+                        required
+                        value={formData.companyName}
+                        onChange={handleChange}
+                        className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none"
+                        placeholder="Enter company name"
+                      />
+                    </div>
                   </div>
-                </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Industry/Sector *
+                    </label>
+                    <div className="relative">
+                      <Briefcase className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                      <input
+                        type="text"
+                        name="industry"
+                        required
+                        value={formData.industry}
+                        onChange={handleChange}
+                        className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none"
+                        placeholder="e.g. Media, IT, Manufacturing"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Location *
+                    </label>
+                    <div className="relative">
+                      <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                      <input
+                        type="text"
+                        name="location"
+                        required
+                        value={formData.location}
+                        onChange={handleChange}
+                        className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none"
+                        placeholder="City, Country"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Website (Optional)
+                    </label>
+                    <div className="relative">
+                      <Globe className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                      <input
+                        type="url"
+                        name="website"
+                        value={formData.website}
+                        onChange={handleChange}
+                        className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none"
+                        placeholder="https://yourcompany.com"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Phone Number *
+                    </label>
+                    <div className="relative">
+                      <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                      <input
+                        type="tel"
+                        name="phone"
+                        required
+                        value={formData.phone}
+                        onChange={handleChange}
+                        className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none"
+                        placeholder="+254 123 456 789"
+                      />
+                    </div>
+                  </div>
+                </>
               )}
 
               {/* Email */}

@@ -66,8 +66,18 @@ export default function AdminPage() {
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      // Success - will be handled by onAuthStateChanged
     } catch (error: any) {
-      setError('Invalid email or password');
+      console.error('Login error:', error);
+      if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password') {
+        setError('Invalid email or password. Make sure you created an admin account.');
+      } else if (error.code === 'auth/user-not-found') {
+        setError('No account found. Please create an admin account first.');
+      } else if (error.code === 'auth/invalid-email') {
+        setError('Invalid email format');
+      } else {
+        setError(`Login failed: ${error.message}`);
+      }
     }
   };
 
@@ -230,6 +240,29 @@ export default function AdminPage() {
 
       {/* Main Content */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Quick Links */}
+        <div className="bg-gradient-to-r from-red-600 to-red-700 rounded-xl p-6 mb-8 shadow-lg">
+          <h2 className="text-white text-lg font-bold mb-4">Admin Quick Links</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <a href="/admin/enhanced" className="bg-white/10 hover:bg-white/20 rounded-lg p-4 text-center transition-colors">
+              <div className="text-white font-semibold">Enhanced Admin</div>
+              <div className="text-white/70 text-xs mt-1">Assign Students</div>
+            </a>
+            <a href="/admin/companies" className="bg-white/10 hover:bg-white/20 rounded-lg p-4 text-center transition-colors">
+              <div className="text-white font-semibold">Companies</div>
+              <div className="text-white/70 text-xs mt-1">Approve Companies</div>
+            </a>
+            <a href="/admin/content" className="bg-white/10 hover:bg-white/20 rounded-lg p-4 text-center transition-colors">
+              <div className="text-white font-semibold">Content</div>
+              <div className="text-white/70 text-xs mt-1">Gallery & Testimonials</div>
+            </a>
+            <a href="/" className="bg-white/10 hover:bg-white/20 rounded-lg p-4 text-center transition-colors">
+              <div className="text-white font-semibold">View Site</div>
+              <div className="text-white/70 text-xs mt-1">Public Homepage</div>
+            </a>
+          </div>
+        </div>
+
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <div className="bg-white rounded-xl p-6 shadow-sm">

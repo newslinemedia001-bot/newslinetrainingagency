@@ -21,6 +21,18 @@ interface UserProfile {
   createdAt: Date;
   companyName?: string;
   phone?: string;
+  industry?: string;
+  location?: string;
+  website?: string;
+  approved?: boolean; // For company approval by admin
+}
+
+interface CompanyData {
+  companyName: string;
+  industry: string;
+  location: string;
+  website?: string;
+  phone: string;
 }
 
 interface AuthContextType {
@@ -28,7 +40,7 @@ interface AuthContextType {
   userProfile: UserProfile | null;
   loading: boolean;
   signInWithEmail: (email: string, password: string) => Promise<void>;
-  signUpWithEmail: (email: string, password: string, name: string, role: 'student' | 'company', companyName?: string) => Promise<void>;
+  signUpWithEmail: (email: string, password: string, name: string, role: 'student' | 'company', companyData?: CompanyData) => Promise<void>;
   signInWithGoogle: (role: 'student' | 'company') => Promise<void>;
   logout: () => Promise<void>;
 }
@@ -69,18 +81,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     password: string, 
     name: string, 
     role: 'student' | 'company',
-    companyName?: string
+    companyData?: CompanyData
   ) => {
     const { user } = await createUserWithEmailAndPassword(auth, email, password);
     
     // Create user profile in Firestore
-    const userProfile: UserProfile = {
+    const userProfile: any = {
       uid: user.uid,
       email: user.email!,
       name,
       role,
       createdAt: new Date(),
-      ...(role === 'company' && companyName ? { companyName } : {})
+      ...(role === 'company' && companyData ? companyData : {})
     };
     
     await setDoc(doc(db, 'users', user.uid), userProfile);
