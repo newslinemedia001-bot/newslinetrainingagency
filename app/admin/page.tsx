@@ -233,7 +233,7 @@ export default function AdminPage() {
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <div className="bg-white rounded-xl p-6 shadow-sm">
-            <div className="text-3xl font-bold bg-gradient-to-r from-red-600 to-purple-600 bg-clip-text text-transparent">{applications.length}</div>
+            <div className="text-3xl font-bold text-red-600">{applications.length}</div>
             <div className="text-gray-600 text-sm">Total Applications</div>
           </div>
           <div className="bg-white rounded-xl p-6 shadow-sm">

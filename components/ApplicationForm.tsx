@@ -123,7 +123,7 @@ export default function ApplicationForm() {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12 animate-fade-in">
             <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
-              Apply for <span className="bg-gradient-to-r from-red-600 to-purple-600 bg-clip-text text-transparent">Attachment</span>
+              Apply for <span className="text-red-600">Attachment</span>
             </h2>
             <p className="text-lg text-gray-600">
               Fill out the form below and we&apos;ll get back to you if an opportunity matches your profile.

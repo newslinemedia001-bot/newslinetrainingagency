@@ -75,7 +75,7 @@ export default function Footer() {
               </Link>
               <Link 
                 href="/admin" 
-                className="block text-gray-400 hover:text-purple-400 transition-colors text-sm"
+                className="block text-gray-400 hover:text-red-400 transition-colors text-sm"
               >
                 Admin Dashboard
               </Link>

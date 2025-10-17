@@ -12,15 +12,17 @@ export default function Hero() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-20">
         <div className="text-center max-w-4xl mx-auto animate-fade-in">
           {/* Logo */}
-          <div className="flex justify-center mb-8">
-            <div className="relative w-72 h-20">
-              <Image
-                src="/logo.png"
-                alt="Newsline Training Agency"
-                fill
-                className="object-contain"
-                priority
-              />
+          <div className="mb-8 flex justify-center">
+            <div className="relative w-80 h-80 bg-white rounded-full shadow-xl p-8 flex items-center justify-center">
+              <div className="relative w-full h-full">
+                <Image
+                  src="/logo.png"
+                  alt="Newsline Training Agency"
+                  fill
+                  className="object-contain"
+                  priority
+                />
+              </div>
             </div>
           </div>
 
@@ -44,7 +46,7 @@ export default function Hero() {
             </Link>
             <Link 
               href="/#categories"
-              className="border-2 border-purple-700 text-purple-700 px-8 py-4 rounded-full font-semibold text-lg hover:bg-purple-50 transition-colors"
+              className="border-2 border-red-600 text-red-600 px-8 py-4 rounded-full font-semibold text-lg hover:bg-red-50 transition-colors"
             >
               Explore Categories
             </Link>
