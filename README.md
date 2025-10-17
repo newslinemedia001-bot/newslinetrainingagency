@@ -1,64 +1,40 @@
 # Newsline Training Agency Website
 
-A modern Next.js website for managing attachment/internship applications across various fields including Media, IT, Film Production, and more.
+A modern Next.js website for managing attachment/internship applications.
 
-## Features
+## 🎉 Recent Updates
 
-- 🎨 Modern, responsive UI with gradient design (Red & Purple theme)
-- 📝 Application form with multiple categories and subcategories
-- 🔥 Firebase integration for data storage
-- 📧 Automated email notifications
-- 🔐 Admin dashboard with authentication
-- 📊 Application management and status tracking
-- 📥 Export applications to CSV
-- 🗺️ Google Maps integration for location
-- 📱 Fully responsive design
+### ✅ Fixed Issues:
+1. **Netlify Build Error** - Removed firebase-admin dependency and fixed webpack configuration
+2. **Color Scheme** - Updated from purple-heavy to red-focused design matching newsline.co.ke
+3. **Logo Integration** - Added logo image to header, hero, and footer sections
 
-## Tech Stack
+### 🎨 Design Updates:
+- Primary color: **Red (#DC2626)**
+- Accent color: **Dark Red (#B91C1C)** 
+- Removed excessive purple - now using red throughout
+- Logo displays in navigation bar (top left corner)
+- Cleaner, more professional look matching Newsline brand
 
-- **Framework**: Next.js 14 (App Router)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **Database**: Firebase Firestore
-- **Authentication**: Firebase Auth
-- **Email**: Nodemailer (Gmail)
-- **Icons**: Lucide React
-- **Date Handling**: date-fns
+---
 
-## Prerequisites
+## 🚀 Quick Start
 
-Before you begin, ensure you have the following installed:
-- Node.js 18+ and npm
-- A Firebase project
-- A Gmail account for sending emails
-
-## Installation
-
-1. Clone the repository and navigate to the project directory:
-```bash
-cd newslinetrainingagency
-```
-
-2. Install dependencies:
+### 1. Install Dependencies
 ```bash
 npm install
 ```
 
-3. Create a `.env.local` file in the root directory (see Environment Variables section below)
+### 2. Add Logo Image
+**IMPORTANT:** You need to add your logo image:
+1. Place your `logo.png` file in the `/public` folder
+2. Make sure it's named exactly `logo.png`
 
-4. Run the development server:
-```bash
-npm run dev
-```
-
-5. Open [http://localhost:3000](http://localhost:3000) in your browser
-
-## Environment Variables
-
-Create a `.env.local` file in the root directory with the following variables:
+### 3. Create Environment Variables
+Create `.env.local` file:
 
 ```env
-# Firebase Configuration
+# Firebase
 NEXT_PUBLIC_FIREBASE_API_KEY=AIzaSyDFWrH8TOK2XqftYt5aA1vflRMdBX9VzTA
 NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=newslinetrainingagency.firebaseapp.com
 NEXT_PUBLIC_FIREBASE_PROJECT_ID=newslinetrainingagency
@@ -67,47 +43,143 @@ NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=943261558505
 NEXT_PUBLIC_FIREBASE_APP_ID=1:943261558505:web:8e9dd779df750a560c7278
 NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=G-E4BB0WX0XZ
 
-# Email Configuration
+# Email (Gmail)
 EMAIL_USER=newslinemedia001@gmail.com
 EMAIL_APP_PASSWORD=your_google_app_password_here
 RECIPIENT_EMAIL=linkcontentdevelopers@gmail.com
 ```
 
-## Getting Google App Password
+### 4. Setup Firebase
+1. Go to [Firebase Console](https://console.firebase.google.com/project/newslinetrainingagency)
+2. Enable **Firestore Database** (Production mode)
+3. Enable **Authentication** → Email/Password
+4. Create an admin user
 
-To send emails through Gmail, you need to generate an App Password:
+### 5. Get Google App Password
+1. Visit https://myaccount.google.com/security
+2. Enable 2-Step Verification
+3. Generate App Password for Mail
+4. Add to `.env.local` as `EMAIL_APP_PASSWORD`
 
-1. Go to your Google Account: https://myaccount.google.com/
-2. Select **Security** from the left menu
-3. Under "How you sign in to Google," select **2-Step Verification** (enable it if not already enabled)
-4. At the bottom of the page, select **App passwords**
-5. Select **Mail** and your device
-6. Click **Generate**
-7. Copy the 16-character password and paste it as `EMAIL_APP_PASSWORD` in your `.env.local` file
+### 6. Run Locally
+```bash
+npm run dev
+```
+Visit http://localhost:3000
 
-**Note**: Remove any spaces from the generated password.
+---
 
-## Firebase Setup
+## 📦 Deploy to Netlify
 
-1. Go to [Firebase Console](https://console.firebase.google.com/)
-2. Select your project (newslinetrainingagency)
-3. Go to **Firestore Database** and create a database (start in production mode)
-4. Go to **Authentication** → **Sign-in method** → Enable **Email/Password**
-5. Go to **Authentication** → **Users** → **Add user** to create an admin account
-6. The Firebase configuration is already included in the project
+### Build Settings:
+- **Build command:** `npm run build`
+- **Publish directory:** `.next`
+- **Node version:** 18.17.0 (set automatically)
 
-## Application Categories
+### Environment Variables to Add in Netlify:
+Add all variables from `.env.local` in:
+**Site settings → Environment variables**
 
-The following categories are available for applicants:
+### Deployment Steps:
+1. Push code to GitHub
+2. Connect repository to Netlify
+3. Add environment variables
+4. Deploy!
 
-1. **Media**
-2. **Public Relations**
-3. **Film Production**
-4. **Graphic and Design**
-5. **Animation and Video Editing**
-6. **Scripting**
-7. **Photography**
-8. **Computer Science / IT** (with subcategories):
+---
+
+## 📂 Project Structure
+
+```
+newslinetrainingagency/
+├── app/
+│   ├── admin/page.tsx              # Admin dashboard
+│   ├── api/submit-application/     # Form API
+│   ├── globals.css                 # Global styles
+│   └── page.tsx                    # Home page
+├── components/
+│   ├── ApplicationForm.tsx         # Application form
+│   ├── Categories.tsx              # Categories display
+│   ├── Contact.tsx                 # Contact section
+│   ├── Footer.tsx                  # Footer with logo
+│   ├── Header.tsx                  # Header with logo
+│   └── Hero.tsx                    # Hero with logo
+├── lib/
+│   ├── categories.ts               # Category definitions
+│   └── firebase.ts                 # Firebase config
+├── public/
+│   └── logo.png                    # YOUR LOGO HERE
+├── .env.local                      # Environment variables (create this)
+└── package.json                    # Dependencies
+```
+
+---
+
+## 🎨 Features
+
+### Public Features:
+- Modern, responsive design (red-focused color scheme)
+- Logo integration in header, hero, and footer
+- 8 professional categories
+- Easy application form with validation
+- Real-time Firebase data storage
+- Automated email notifications
+- Google Maps integration
+- Mobile-friendly design
+
+### Admin Features:
+- Secure email/password authentication
+- View all applications
+- Filter by status (Pending/Reviewed/Contacted)
+- Update application status
+- View detailed applicant info
+- Export to CSV
+- Direct contact links
+
+---
+
+## 📧 Contact Information
+
+- **Email:** linkcontentdevelopers@gmail.com
+- **Phone:** +254 720 933350
+- **Map:** https://maps.app.goo.gl/zQvUsuzZiEQoodvS6
+
+---
+
+## 🐛 Troubleshooting
+
+### Build fails on Netlify
+- Ensure Node version is 18.17.0+
+- Check all environment variables are added
+- Remove `node_modules` and reinstall: `npm ci`
+
+### Logo not showing
+- Make sure `logo.png` exists in `/public` folder
+- Check file name is exactly `logo.png` (case-sensitive)
+- Clear browser cache
+
+### Emails not sending
+- Verify Google App Password is correct (no spaces)
+- Check 2-Step Verification is enabled
+- Regenerate App Password if needed
+
+### Admin login not working
+- Confirm admin user exists in Firebase Authentication
+- Check Firebase Auth is enabled
+- Verify email/password are correct
+
+---
+
+## 📝 Categories Available
+
+1. Media
+2. Public Relations
+3. Film Production
+4. Graphic and Design
+5. Animation and Video Editing
+6. Scripting
+7. Photography
+8. Computer Science / IT
    - Cybersecurity
    - Mobile Development (Android)
    - Mobile Development (iOS)
@@ -116,84 +188,23 @@ The following categories are available for applicants:
    - Networking
    - Graphic Design
 
-## Admin Dashboard
+---
 
-The admin dashboard is accessible at `/admin` and provides the following features:
+## 🔒 Security
 
-- View all applications
-- Filter applications by status (Pending, Reviewed, Contacted)
-- Update application status
-- View detailed application information
-- Delete applications
-- Export applications to CSV
-- Direct email and phone contact links
+- Firebase rules need to be configured for production
+- Environment variables protected via `.gitignore`
+- Admin authentication required for dashboard
+- Email passwords use App Passwords (not main password)
 
-**Admin Login**: Use the email/password you created in Firebase Authentication.
+---
 
-## Deployment to Netlify
-
-1. Push your code to a Git repository (GitHub, GitLab, or Bitbucket)
-
-2. Go to [Netlify](https://www.netlify.com/) and sign in
-
-3. Click "Add new site" → "Import an existing project"
-
-4. Connect your Git repository
-
-5. Configure build settings:
-   - **Build command**: `npm run build`
-   - **Publish directory**: `.next`
-   - **Base directory**: (leave empty)
-
-6. Add environment variables:
-   - Go to Site settings → Environment variables
-   - Add all the environment variables from your `.env.local` file
-
-7. Deploy the site
-
-8. (Optional) Configure a custom domain
-
-## Project Structure
-
-```
-newslinetrainingagency/
-├── app/
-│   ├── admin/
-│   │   └── page.tsx          # Admin dashboard
-│   ├── api/
-│   │   └── submit-application/
-│   │       └── route.ts      # API endpoint for form submission
-│   ├── globals.css           # Global styles
-│   ├── layout.tsx            # Root layout
-│   └── page.tsx              # Home page
-├── components/
-│   ├── ApplicationForm.tsx   # Application form component
-│   ├── Categories.tsx        # Categories section
-│   ├── Contact.tsx           # Contact section
-│   ├── Footer.tsx            # Footer component
-│   ├── Header.tsx            # Header/navigation
-│   └── Hero.tsx              # Hero section
-├── lib/
-│   ├── categories.ts         # Category definitions
-│   └── firebase.ts           # Firebase configuration
-├── public/                   # Static assets
-├── .env.local               # Environment variables (create this)
-├── next.config.js           # Next.js configuration
-├── package.json             # Dependencies
-├── tailwind.config.js       # Tailwind CSS configuration
-└── tsconfig.json            # TypeScript configuration
-```
-
-## Contact Information
-
-- **Email**: linkcontentdevelopers@gmail.com
-- **Phone**: +254 720 933350
-- **Location**: [View on Google Maps](https://maps.app.goo.gl/zQvUsuzZiEQoodvS6)
-
-## Support
-
-For any issues or questions, please contact the development team at linkcontentdevelopers@gmail.com
-
-## License
+## 📄 License
 
 © 2024 Newsline Training Agency. All rights reserved.
+
+---
+
+## 🆘 Support
+
+For issues or questions, contact: linkcontentdevelopers@gmail.com

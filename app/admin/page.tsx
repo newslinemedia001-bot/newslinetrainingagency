@@ -129,17 +129,17 @@ export default function AdminPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-700"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600"></div>
       </div>
     );
   }
 
   if (!user) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-600 to-purple-700 p-4">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-600 to-red-700 p-4">
         <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md">
           <div className="text-center mb-8">
-            <div className="w-16 h-16 rounded-full bg-gradient-to-r from-red-600 to-purple-700 flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 rounded-full bg-red-600 flex items-center justify-center mx-auto mb-4">
               <span className="text-white font-bold text-3xl">N</span>
             </div>
             <h1 className="text-3xl font-bold text-gray-900 mb-2">Admin Login</h1>
@@ -156,7 +156,7 @@ export default function AdminPage() {
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-purple-600 focus:ring-2 focus:ring-purple-200 outline-none transition-all"
+                className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all"
                 placeholder="admin@example.com"
                 required
               />
@@ -171,7 +171,7 @@ export default function AdminPage() {
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-purple-600 focus:ring-2 focus:ring-purple-200 outline-none transition-all"
+                className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all"
                 placeholder="••••••••"
                 required
               />
@@ -203,13 +203,12 @@ export default function AdminPage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-r from-red-600 to-purple-700 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-full bg-red-600 flex items-center justify-center">
                 <span className="text-white font-bold text-xl">N</span>
               </div>
               <div className="ml-3">
-                <h1 className="text-xl font-bold">
-                  <span className="text-red-600">NEWS</span>
-                  <span className="text-purple-700">LINE</span>
+                <h1 className="text-xl font-bold text-red-600">
+                  NEWSLINE
                 </h1>
                 <p className="text-xs text-gray-600">Admin Dashboard</p>
               </div>
@@ -234,7 +233,7 @@ export default function AdminPage() {
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <div className="bg-white rounded-xl p-6 shadow-sm">
-            <div className="text-3xl font-bold text-purple-700">{applications.length}</div>
+            <div className="text-3xl font-bold bg-gradient-to-r from-red-600 to-purple-600 bg-clip-text text-transparent">{applications.length}</div>
             <div className="text-gray-600 text-sm">Total Applications</div>
           </div>
           <div className="bg-white rounded-xl p-6 shadow-sm">
@@ -264,7 +263,7 @@ export default function AdminPage() {
             <select
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
-              className="px-4 py-2 rounded-lg border border-gray-300 focus:border-purple-600 focus:ring-2 focus:ring-purple-200 outline-none"
+              className="px-4 py-2 rounded-lg border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none"
             >
               <option value="all">All Applications</option>
               <option value="pending">Pending</option>
@@ -392,7 +391,7 @@ export default function AdminPage() {
       {selectedApp && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 bg-gradient-to-r from-red-600 to-purple-700 p-6 text-white">
+            <div className="sticky top-0 bg-red-600 p-6 text-white">
               <div className="flex justify-between items-start">
                 <div>
                   <h2 className="text-2xl font-bold">{selectedApp.fullName}</h2>
@@ -462,7 +461,7 @@ export default function AdminPage() {
                 </a>
                 <a
                   href={`tel:${selectedApp.phone}`}
-                  className="flex-1 border-2 border-purple-700 text-purple-700 px-6 py-3 rounded-xl font-semibold hover:bg-purple-50 transition-colors flex items-center justify-center space-x-2"
+                  className="flex-1 border-2 border-red-600 text-red-600 px-6 py-3 rounded-xl font-semibold hover:bg-red-50 transition-colors flex items-center justify-center space-x-2"
                 >
                   <Phone size={18} />
                   <span>Call</span>

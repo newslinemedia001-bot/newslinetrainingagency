@@ -8,7 +8,7 @@ export default function Contact() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16 animate-fade-in">
           <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
-            Get in <span className="gradient-text">Touch</span>
+            Get in <span className="bg-gradient-to-r from-red-600 to-purple-600 bg-clip-text text-transparent">Touch</span>
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Have questions? We're here to help. Reach out to us through any of the channels below.
@@ -20,14 +20,14 @@ export default function Contact() {
           <div className="space-y-8">
             <div className="bg-white rounded-2xl p-6 card-hover">
               <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-600 to-purple-700 flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center flex-shrink-0">
                   <Mail className="text-white" size={24} />
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-gray-900 mb-2">Email Us</h3>
                   <a 
                     href="mailto:linkcontentdevelopers@gmail.com"
-                    className="text-purple-600 hover:text-purple-700 transition-colors"
+                    className="text-red-600 hover:text-red-700 transition-colors"
                   >
                     linkcontentdevelopers@gmail.com
                   </a>
@@ -40,14 +40,14 @@ export default function Contact() {
 
             <div className="bg-white rounded-2xl p-6 card-hover">
               <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-600 to-purple-700 flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center flex-shrink-0">
                   <Phone className="text-white" size={24} />
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-gray-900 mb-2">Call Us</h3>
                   <a 
                     href="tel:+254720933350"
-                    className="text-purple-600 hover:text-purple-700 transition-colors"
+                    className="text-red-600 hover:text-red-700 transition-colors"
                   >
                     +254 720 933350
                   </a>
@@ -60,7 +60,7 @@ export default function Contact() {
 
             <div className="bg-white rounded-2xl p-6 card-hover">
               <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-600 to-purple-700 flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center flex-shrink-0">
                   <MapPin className="text-white" size={24} />
                 </div>
                 <div>
@@ -69,7 +69,7 @@ export default function Contact() {
                     href="https://maps.app.goo.gl/zQvUsuzZiEQoodvS6"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-purple-600 hover:text-purple-700 transition-colors"
+                    className="text-red-600 hover:text-red-700 transition-colors"
                   >
                     View Location on Google Maps
                   </a>
@@ -82,14 +82,14 @@ export default function Contact() {
 
             <div className="bg-white rounded-2xl p-6 card-hover">
               <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-600 to-purple-700 flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center flex-shrink-0">
                   <Clock className="text-white" size={24} />
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-gray-900 mb-2">Working Hours</h3>
                   <div className="text-gray-700 space-y-1">
                     <p className="text-sm">Monday - Friday: 9:00 AM - 5:00 PM</p>
-                    <p className="text-sm">Saturday: 10:00 AM - 2:00 PM</p>
+                    <p className="text-sm">Saturday: Closed</p>
                     <p className="text-sm text-gray-500">Sunday: Closed</p>
                   </div>
                 </div>

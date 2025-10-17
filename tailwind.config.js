@@ -9,14 +9,15 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          red: '#E53E3E',
-          purple: '#5B21B6',
-          dark: '#2D3748',
+          red: '#DC2626',
+          accent: '#374151',
+          dark: '#1F2937',
         },
         newsline: {
           red: '#DC2626',
-          purple: '#6B21A8',
-          light: '#F7FAFC',
+          darkred: '#B91C1C',
+          gray: '#374151',
+          light: '#F9FAFB',
         },
       },
     },

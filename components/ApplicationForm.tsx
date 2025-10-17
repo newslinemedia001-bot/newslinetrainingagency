@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { categories } from '@/lib/categories';
 import { Send, Loader2, CheckCircle } from 'lucide-react';
+import { db } from '@/lib/firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 interface FormData {
   fullName: string;
@@ -36,6 +38,7 @@ export default function ApplicationForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+  const [flexibleWeeks, setFlexibleWeeks] = useState('');
 
   const selectedCategory = categories.find(cat => cat.id === formData.category);
 
@@ -56,12 +59,31 @@ export default function ApplicationForm() {
     setErrorMessage('');
 
     try {
+      // Prepare duration with flexible weeks if applicable
+      const finalDuration = formData.duration === 'Flexible' 
+        ? `Flexible (${flexibleWeeks} weeks)` 
+        : formData.duration;
+
+      // First, save to Firestore
+      const applicationsRef = collection(db, 'applications');
+      const docRef = await addDoc(applicationsRef, {
+        ...formData,
+        duration: finalDuration,
+        submittedAt: serverTimestamp(),
+        status: 'pending',
+      });
+
+      // Then send email notification via API
       const response = await fetch('/api/submit-application', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          duration: finalDuration,
+          applicationId: docRef.id,
+        }),
       });
 
       const data = await response.json();
@@ -82,6 +104,7 @@ export default function ApplicationForm() {
           duration: '',
           coverLetter: '',
         });
+        setFlexibleWeeks('');
       } else {
         setSubmitStatus('error');
         setErrorMessage(data.error || 'Failed to submit application. Please try again.');
@@ -100,7 +123,7 @@ export default function ApplicationForm() {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12 animate-fade-in">
             <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
-              Apply for <span className="gradient-text">Attachment</span>
+              Apply for <span className="bg-gradient-to-r from-red-600 to-purple-600 bg-clip-text text-transparent">Attachment</span>
             </h2>
             <p className="text-lg text-gray-600">
               Fill out the form below and we'll get back to you if an opportunity matches your profile.
@@ -121,7 +144,7 @@ export default function ApplicationForm() {
                   required
                   value={formData.fullName}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-purple-600 focus:ring-2 focus:ring-purple-200 outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all"
                   placeholder="John Doe"
                 />
               </div>
@@ -138,7 +161,7 @@ export default function ApplicationForm() {
                   required
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-purple-600 focus:ring-2 focus:ring-purple-200 outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all"
                   placeholder="john@example.com"
                 />
               </div>
@@ -155,7 +178,7 @@ export default function ApplicationForm() {
                   required
                   value={formData.phone}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-purple-600 focus:ring-2 focus:ring-purple-200 outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all"
                   placeholder="+254 700 000000"
                 />
               </div>
@@ -171,7 +194,7 @@ export default function ApplicationForm() {
                   required
                   value={formData.category}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-purple-600 focus:ring-2 focus:ring-purple-200 outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all"
                 >
                   <option value="">Select a category</option>
                   {categories.map(category => (
@@ -194,7 +217,7 @@ export default function ApplicationForm() {
                     required
                     value={formData.subcategory}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-purple-600 focus:ring-2 focus:ring-purple-200 outline-none transition-all"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all"
                   >
                     <option value="">Select a specialization</option>
                     {selectedCategory.subcategories.map((sub, idx) => (
@@ -218,7 +241,7 @@ export default function ApplicationForm() {
                   required
                   value={formData.institution}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-purple-600 focus:ring-2 focus:ring-purple-200 outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all"
                   placeholder="University/College name"
                 />
               </div>
@@ -235,7 +258,7 @@ export default function ApplicationForm() {
                   required
                   value={formData.course}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-purple-600 focus:ring-2 focus:ring-purple-200 outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all"
                   placeholder="e.g., Computer Science"
                 />
               </div>
@@ -251,7 +274,7 @@ export default function ApplicationForm() {
                   required
                   value={formData.yearOfStudy}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-purple-600 focus:ring-2 focus:ring-purple-200 outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all"
                 >
                   <option value="">Select year</option>
                   <option value="1st Year">1st Year</option>
@@ -274,7 +297,7 @@ export default function ApplicationForm() {
                   required
                   value={formData.availability}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-purple-600 focus:ring-2 focus:ring-purple-200 outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all"
                 />
               </div>
 
@@ -283,21 +306,36 @@ export default function ApplicationForm() {
                 <label htmlFor="duration" className="block text-sm font-semibold text-gray-700 mb-2">
                   Preferred Duration *
                 </label>
-                <select
-                  id="duration"
-                  name="duration"
-                  required
-                  value={formData.duration}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-purple-600 focus:ring-2 focus:ring-purple-200 outline-none transition-all"
-                >
-                  <option value="">Select duration</option>
-                  <option value="1 month">1 month</option>
-                  <option value="2 months">2 months</option>
-                  <option value="3 months">3 months</option>
-                  <option value="6 months">6 months</option>
-                  <option value="Flexible">Flexible</option>
-                </select>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <select
+                    id="duration"
+                    name="duration"
+                    required
+                    value={formData.duration}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all"
+                  >
+                    <option value="">Select duration</option>
+                    <option value="1 month">1 month</option>
+                    <option value="2 months">2 months</option>
+                    <option value="3 months">3 months</option>
+                    <option value="6 months">6 months</option>
+                    <option value="Flexible">Flexible (specify weeks)</option>
+                  </select>
+                  
+                  {formData.duration === 'Flexible' && (
+                    <input
+                      type="number"
+                      placeholder="Number of weeks"
+                      min="1"
+                      max="52"
+                      required
+                      value={flexibleWeeks}
+                      onChange={(e) => setFlexibleWeeks(e.target.value)}
+                      className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all"
+                    />
+                  )}
+                </div>
               </div>
 
               {/* Cover Letter */}
@@ -312,7 +350,7 @@ export default function ApplicationForm() {
                   value={formData.coverLetter}
                   onChange={handleChange}
                   rows={5}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-purple-600 focus:ring-2 focus:ring-purple-200 outline-none transition-all resize-none"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all resize-none"
                   placeholder="Tell us about yourself, your skills, and why you're interested in this attachment..."
                 />
               </div>

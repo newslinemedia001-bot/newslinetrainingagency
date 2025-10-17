@@ -2,33 +2,31 @@
 
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden hero-pattern">
-      <div className="absolute inset-0 bg-gradient-to-br from-white via-red-50/30 to-purple-50/30"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-white via-red-50/20 to-gray-50/30"></div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-20">
         <div className="text-center max-w-4xl mx-auto animate-fade-in">
           {/* Logo */}
           <div className="flex justify-center mb-8">
-            <div className="flex items-center">
-              <div className="w-20 h-20 rounded-full bg-gradient-to-r from-red-600 to-purple-700 flex items-center justify-center shadow-2xl">
-                <span className="text-white font-bold text-4xl">N</span>
-              </div>
-              <div className="ml-4 text-left">
-                <h1 className="text-4xl sm:text-5xl font-bold">
-                  <span className="text-red-600">NEWS</span>
-                  <span className="text-purple-700">LINE</span>
-                </h1>
-                <p className="text-sm sm:text-base text-purple-700 font-bold tracking-wider">TRAINING AGENCY</p>
-              </div>
+            <div className="relative w-72 h-20">
+              <Image
+                src="/logo.png"
+                alt="Newsline Training Agency"
+                fill
+                className="object-contain"
+                priority
+              />
             </div>
           </div>
 
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
             Launch Your Career with
-            <span className="gradient-text block mt-2">Professional Training</span>
+            <span className="bg-gradient-to-r from-red-600 to-purple-600 bg-clip-text text-transparent block mt-2">Professional Training</span>
           </h2>
           
           <p className="text-lg sm:text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
@@ -71,8 +69,8 @@ export default function Hero() {
       </div>
 
       {/* Decorative Elements */}
-      <div className="absolute top-20 left-10 w-72 h-72 bg-red-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
-      <div className="absolute bottom-20 right-10 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-75"></div>
+      <div className="absolute top-20 left-10 w-72 h-72 bg-red-200 rounded-full mix-blend-multiply filter blur-xl opacity-15 animate-pulse"></div>
+      <div className="absolute bottom-20 right-10 w-72 h-72 bg-red-100 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-pulse delay-75"></div>
     </section>
   );
 }

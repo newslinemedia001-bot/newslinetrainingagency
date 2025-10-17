@@ -1,14 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
-import { db } from '@/lib/firebase';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
     // Validate required fields
-    const requiredFields = ['fullName', 'email', 'phone', 'category', 'institution', 'course', 'yearOfStudy', 'availability', 'duration', 'coverLetter'];
+    const requiredFields = ['fullName', 'email', 'phone', 'category', 'institution', 'course', 'yearOfStudy', 'availability', 'duration', 'coverLetter', 'applicationId'];
     const missingFields = requiredFields.filter(field => !body[field]);
 
     if (missingFields.length > 0) {
@@ -17,14 +15,6 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-
-    // Save to Firestore
-    const applicationsRef = collection(db, 'applications');
-    const docRef = await addDoc(applicationsRef, {
-      ...body,
-      submittedAt: serverTimestamp(),
-      status: 'pending',
-    });
 
     // Send email notification
     const transporter = nodemailer.createTransport({
@@ -37,7 +27,7 @@ export async function POST(request: NextRequest) {
 
     const emailContent = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <div style="background: linear-gradient(135deg, #DC2626 0%, #6B21A8 100%); padding: 30px; text-align: center;">
+        <div style="background: #DC2626; padding: 30px; text-align: center;">
           <h1 style="color: white; margin: 0;">New Attachment Application</h1>
         </div>
         
@@ -51,7 +41,7 @@ export async function POST(request: NextRequest) {
           </div>
 
           <div style="background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
-            <h3 style="color: #6B21A8; margin-top: 0;">Application Details</h3>
+            <h3 style="color: #DC2626; margin-top: 0;">Application Details</h3>
             <p style="margin: 10px 0;"><strong>Category:</strong> ${body.category}</p>
             ${body.subcategory ? `<p style="margin: 10px 0;"><strong>Subcategory:</strong> ${body.subcategory}</p>` : ''}
             <p style="margin: 10px 0;"><strong>Institution:</strong> ${body.institution}</p>
@@ -68,7 +58,7 @@ export async function POST(request: NextRequest) {
 
           <div style="margin-top: 30px; padding: 20px; background: #fef3c7; border-left: 4px solid #f59e0b; border-radius: 5px;">
             <p style="margin: 0; color: #92400e;">
-              <strong>Application ID:</strong> ${docRef.id}<br>
+              <strong>Application ID:</strong> ${body.applicationId}<br>
               <strong>Submitted:</strong> ${new Date().toLocaleString()}
             </p>
           </div>
@@ -92,7 +82,7 @@ export async function POST(request: NextRequest) {
       { 
         success: true, 
         message: 'Application submitted successfully',
-        applicationId: docRef.id 
+        applicationId: body.applicationId 
       },
       { status: 200 }
     );

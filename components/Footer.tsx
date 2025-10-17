@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
 
 export default function Footer() {
@@ -10,16 +11,14 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* About Section */}
           <div>
-            <div className="flex items-center mb-4">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-r from-red-600 to-purple-700 flex items-center justify-center">
-                <span className="text-white font-bold text-xl">N</span>
-              </div>
-              <div className="ml-3">
-                <h3 className="text-lg font-bold">
-                  <span className="text-red-500">NEWS</span>
-                  <span className="text-purple-500">LINE</span>
-                </h3>
-                <p className="text-xs text-gray-400">TRAINING AGENCY</p>
+            <div className="mb-4">
+              <div className="relative w-44 h-12">
+                <Image
+                  src="/logo.png"
+                  alt="Newsline Training Agency"
+                  fill
+                  className="object-contain"
+                />
               </div>
             </div>
             <p className="text-gray-400 text-sm">

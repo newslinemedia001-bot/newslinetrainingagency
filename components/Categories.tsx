@@ -29,7 +29,7 @@ export default function Categories() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16 animate-fade-in">
           <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
-            Explore <span className="gradient-text">Our Categories</span>
+            Explore <span className="bg-gradient-to-r from-red-600 to-purple-600 bg-clip-text text-transparent">Our Categories</span>
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Choose from a wide range of professional fields and find the perfect attachment opportunity for your career goals.
@@ -59,7 +59,7 @@ export default function Categories() {
                     <ul className="text-sm text-gray-600 space-y-1">
                       {category.subcategories.slice(0, 3).map((sub, idx) => (
                         <li key={idx} className="flex items-center">
-                          <span className="w-1.5 h-1.5 rounded-full bg-purple-600 mr-2"></span>
+                          <span className="w-1.5 h-1.5 rounded-full bg-red-600 mr-2"></span>
                           {sub}
                         </li>
                       ))}

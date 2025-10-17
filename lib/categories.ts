@@ -37,6 +37,7 @@ export const categories: Category[] = [
     id: 'computer-science',
     name: 'Computer Science / Information Technology',
     subcategories: [
+      'General',
       'Cybersecurity',
       'Mobile Development (Android)',
       'Mobile Development (iOS)',

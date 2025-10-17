@@ -4,6 +4,32 @@ const nextConfig = {
   images: {
     domains: ['maps.googleapis.com'],
   },
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+        dns: false,
+        child_process: false,
+      };
+      
+      // Exclude undici from client bundle
+      config.externals = config.externals || [];
+      config.externals.push('undici');
+    }
+    
+    // Add rule to ignore undici parsing errors
+    config.module = config.module || {};
+    config.module.rules = config.module.rules || [];
+    config.module.rules.push({
+      test: /node_modules\/undici\//,
+      use: 'null-loader',
+    });
+    
+    return config;
+  },
   env: {
     NEXT_PUBLIC_FIREBASE_API_KEY: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
     NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
