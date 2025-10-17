@@ -7,6 +7,7 @@ import { collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from 'firebase
 import { db } from '@/lib/firebase';
 import { Image as ImageIcon, MessageSquare, Upload, Loader2, Trash2, CheckCircle, X } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function AdminContentPage() {
   const [activeTab, setActiveTab] = useState<'gallery' | 'testimonials'>('gallery');
@@ -198,8 +199,8 @@ export default function AdminContentPage() {
                           {uploading ? <Loader2 className="animate-spin text-red-600" size={32} /> : <><Upload size={32} /><span className="text-sm mt-2">{uploadedImageName || 'Upload Image'}</span></>}
                         </label>
                       ) : (
-                        <div className="relative">
-                          <img src={galleryForm.imageUrl} alt="Preview" className="w-full h-32 object-cover rounded-lg" />
+                        <div className="relative w-full h-32">
+                          <Image src={galleryForm.imageUrl} alt="Preview" fill className="object-cover rounded-lg" />
                           <button onClick={() => { setGalleryForm(prev => ({ ...prev, imageUrl: '' })); setUploadedImageName(''); }} className="absolute top-2 right-2 bg-red-600 text-white p-1 rounded-full">
                             <X size={16} />
                           </button>
@@ -223,7 +224,9 @@ export default function AdminContentPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {galleryItems.map(item => (
                     <div key={item.id} className="bg-white rounded-lg overflow-hidden shadow-sm">
-                      <img src={item.imageUrl} alt={item.title} className="w-full h-48 object-cover" />
+                      <div className="relative w-full h-48">
+                        <Image src={item.imageUrl} alt={item.title} fill className="object-cover" />
+                      </div>
                       <div className="p-4">
                         <h4 className="font-bold">{item.title}</h4>
                         <p className="text-sm text-gray-600">{item.description}</p>
@@ -258,8 +261,8 @@ export default function AdminContentPage() {
                           {uploading ? <Loader2 className="animate-spin text-red-600" size={32} /> : <><Upload size={32} /><span className="text-sm mt-2">{uploadedTestimonialImageName || 'Upload Photo'}</span></>}
                         </label>
                       ) : (
-                        <div className="relative">
-                          <img src={testimonialForm.imageUrl} alt="Preview" className="w-full h-32 object-cover rounded-lg" />
+                        <div className="relative w-full h-32">
+                          <Image src={testimonialForm.imageUrl} alt="Preview" fill className="object-cover rounded-lg" />
                           <button onClick={() => { setTestimonialForm(prev => ({ ...prev, imageUrl: '' })); setUploadedTestimonialImageName(''); }} className="absolute top-2 right-2 bg-red-600 text-white p-1 rounded-full">
                             <X size={16} />
                           </button>
@@ -295,7 +298,11 @@ export default function AdminContentPage() {
                   {testimonials.map(item => (
                     <div key={item.id} className="bg-white rounded-lg p-6 shadow-sm">
                       <div className="flex items-start space-x-4">
-                        {item.imageUrl && <img src={item.imageUrl} alt={item.name} className="w-16 h-16 rounded-full object-cover" />}
+                        {item.imageUrl && (
+                          <div className="relative w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                            <Image src={item.imageUrl} alt={item.name} fill className="object-cover" />
+                          </div>
+                        )}
                         <div className="flex-1">
                           <h4 className="font-bold">{item.name}</h4>
                           <p className="text-sm text-gray-600">{item.role} {item.company && `at ${item.company}`}</p>

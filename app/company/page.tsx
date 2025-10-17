@@ -31,36 +31,6 @@ export default function CompanyDashboard() {
   const [loading, setLoading] = useState(true);
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
 
-  // Check if company is approved
-  if (userProfile && !userProfile.approved) {
-    return (
-      <ProtectedRoute allowedRoles={['company']}>
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-          <div className="max-w-md bg-white rounded-2xl shadow-lg p-8 text-center">
-            <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <XCircle className="text-yellow-600" size={32} />
-            </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Account Pending Approval</h2>
-            <p className="text-gray-600 mb-4">
-              Your company registration is being reviewed by our admin team. You will receive an email once your account is approved.
-            </p>
-            <div className="bg-gray-50 rounded-lg p-4 mb-6">
-              <p className="text-sm text-gray-700">
-                <strong>Company:</strong> {userProfile.companyName}
-              </p>
-              <p className="text-sm text-gray-700">
-                <strong>Email:</strong> {userProfile.email}
-              </p>
-            </div>
-            <p className="text-sm text-gray-500">
-              This usually takes 1-2 business days. Thank you for your patience!
-            </p>
-          </div>
-        </div>
-      </ProtectedRoute>
-    );
-  }
-
   useEffect(() => {
     const fetchStudents = async () => {
       if (!userProfile?.companyName || !userProfile?.approved) return;
@@ -109,6 +79,36 @@ export default function CompanyDashboard() {
       alert('Failed to send feedback');
     }
   };
+
+  // Check if company is approved
+  if (userProfile && !userProfile.approved) {
+    return (
+      <ProtectedRoute allowedRoles={['company']}>
+        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+          <div className="max-w-md bg-white rounded-2xl shadow-lg p-8 text-center">
+            <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <XCircle className="text-yellow-600" size={32} />
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">Account Pending Approval</h2>
+            <p className="text-gray-600 mb-4">
+              Your company registration is being reviewed by our admin team. You will receive an email once your account is approved.
+            </p>
+            <div className="bg-gray-50 rounded-lg p-4 mb-6">
+              <p className="text-sm text-gray-700">
+                <strong>Company:</strong> {userProfile.companyName}
+              </p>
+              <p className="text-sm text-gray-700">
+                <strong>Email:</strong> {userProfile.email}
+              </p>
+            </div>
+            <p className="text-sm text-gray-500">
+              This usually takes 1-2 business days. Thank you for your patience!
+            </p>
+          </div>
+        </div>
+      </ProtectedRoute>
+    );
+  }
 
   return (
     <ProtectedRoute allowedRoles={['company']}>

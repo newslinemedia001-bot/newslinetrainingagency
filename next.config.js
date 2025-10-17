@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['maps.googleapis.com'],
+    domains: ['maps.googleapis.com', 'res.cloudinary.com'],
   },
   webpack: (config, { isServer }) => {
     if (!isServer) {
