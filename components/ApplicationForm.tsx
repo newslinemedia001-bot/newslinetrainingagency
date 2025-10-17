@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { categories } from '@/lib/categories';
-import { Send, Loader2, CheckCircle } from 'lucide-react';
+import { Send, Loader2, CheckCircle, Upload, FileText, X } from 'lucide-react';
 import { db } from '@/lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
@@ -18,6 +18,8 @@ interface FormData {
   availability: string;
   duration: string;
   coverLetter: string;
+  cvUrl: string;
+  coverLetterUrl: string;
   consent: boolean;
 }
 
@@ -34,6 +36,8 @@ export default function ApplicationForm() {
     availability: '',
     duration: '',
     coverLetter: '',
+    cvUrl: '',
+    coverLetterUrl: '',
     consent: false,
   });
 
@@ -41,6 +45,10 @@ export default function ApplicationForm() {
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
   const [flexibleWeeks, setFlexibleWeeks] = useState('');
+  const [uploadingCV, setUploadingCV] = useState(false);
+  const [uploadingCoverLetter, setUploadingCoverLetter] = useState(false);
+  const [cvFileName, setCvFileName] = useState('');
+  const [coverLetterFileName, setCoverLetterFileName] = useState('');
 
   const selectedCategory = categories.find(cat => cat.id === formData.category);
 
@@ -54,6 +62,71 @@ export default function ApplicationForm() {
       // Reset subcategory if category changes
       ...(name === 'category' ? { subcategory: '' } : {})
     }));
+  };
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, type: 'cv' | 'coverLetter') => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    const validTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+    if (!validTypes.includes(file.type)) {
+      alert('Please upload a PDF or Word document');
+      return;
+    }
+
+    // Validate file size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      alert('File size must be less than 5MB');
+      return;
+    }
+
+    const setUploading = type === 'cv' ? setUploadingCV : setUploadingCoverLetter;
+    const setFileName = type === 'cv' ? setCvFileName : setCoverLetterFileName;
+    
+    setUploading(true);
+    setFileName(file.name);
+
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || 'newslinetrainingagency');
+
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || 'dlvgrs5vp'}/raw/upload`,
+        {
+          method: 'POST',
+          body: formData,
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.secure_url) {
+        setFormData(prev => ({
+          ...prev,
+          [type === 'cv' ? 'cvUrl' : 'coverLetterUrl']: data.secure_url
+        }));
+      } else {
+        throw new Error('Upload failed');
+      }
+    } catch (error) {
+      console.error('Upload error:', error);
+      alert('Failed to upload file. Please try again.');
+      setFileName('');
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const removeFile = (type: 'cv' | 'coverLetter') => {
+    if (type === 'cv') {
+      setFormData(prev => ({ ...prev, cvUrl: '' }));
+      setCvFileName('');
+    } else {
+      setFormData(prev => ({ ...prev, coverLetterUrl: '' }));
+      setCoverLetterFileName('');
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -107,8 +180,12 @@ export default function ApplicationForm() {
           availability: '',
           duration: '',
           coverLetter: '',
+          cvUrl: '',
+          coverLetterUrl: '',
           consent: false,
         });
+        setCvFileName('');
+        setCoverLetterFileName('');
         setFlexibleWeeks('');
       } else {
         setSubmitStatus('error');
@@ -358,6 +435,97 @@ export default function ApplicationForm() {
                   className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all resize-none"
                   placeholder="Tell us about yourself, your skills, and why you're interested in this attachment..."
                 />
+              </div>
+
+              {/* CV Upload */}
+              <div className="md:col-span-2">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Upload CV/Resume * (PDF or Word, max 5MB)
+                </label>
+                <div className="relative">
+                  {!formData.cvUrl ? (
+                    <label className="flex items-center justify-center w-full px-4 py-8 border-2 border-dashed border-gray-300 rounded-xl hover:border-red-600 transition-colors cursor-pointer bg-gray-50 hover:bg-red-50">
+                      <input
+                        type="file"
+                        accept=".pdf,.doc,.docx"
+                        onChange={(e) => handleFileUpload(e, 'cv')}
+                        className="hidden"
+                        required={!formData.cvUrl}
+                      />
+                      {uploadingCV ? (
+                        <div className="flex items-center space-x-2 text-red-600">
+                          <Loader2 className="animate-spin" size={24} />
+                          <span>Uploading {cvFileName}...</span>
+                        </div>
+                      ) : (
+                        <div className="flex flex-col items-center space-y-2 text-gray-600">
+                          <Upload size={32} />
+                          <span className="font-semibold">Click to upload your CV</span>
+                          <span className="text-xs">PDF, DOC, or DOCX</span>
+                        </div>
+                      )}
+                    </label>
+                  ) : (
+                    <div className="flex items-center justify-between px-4 py-3 bg-green-50 border-2 border-green-500 rounded-xl">
+                      <div className="flex items-center space-x-2 text-green-700">
+                        <CheckCircle size={20} />
+                        <span className="font-semibold">{cvFileName}</span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => removeFile('cv')}
+                        className="text-red-600 hover:text-red-700 p-1"
+                      >
+                        <X size={20} />
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Cover Letter Document Upload (Optional) */}
+              <div className="md:col-span-2">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Upload Cover Letter Document (Optional - PDF or Word, max 5MB)
+                </label>
+                <div className="relative">
+                  {!formData.coverLetterUrl ? (
+                    <label className="flex items-center justify-center w-full px-4 py-8 border-2 border-dashed border-gray-300 rounded-xl hover:border-red-600 transition-colors cursor-pointer bg-gray-50 hover:bg-red-50">
+                      <input
+                        type="file"
+                        accept=".pdf,.doc,.docx"
+                        onChange={(e) => handleFileUpload(e, 'coverLetter')}
+                        className="hidden"
+                      />
+                      {uploadingCoverLetter ? (
+                        <div className="flex items-center space-x-2 text-red-600">
+                          <Loader2 className="animate-spin" size={24} />
+                          <span>Uploading {coverLetterFileName}...</span>
+                        </div>
+                      ) : (
+                        <div className="flex flex-col items-center space-y-2 text-gray-600">
+                          <FileText size={32} />
+                          <span className="font-semibold">Click to upload cover letter</span>
+                          <span className="text-xs">PDF, DOC, or DOCX (Optional)</span>
+                        </div>
+                      )}
+                    </label>
+                  ) : (
+                    <div className="flex items-center justify-between px-4 py-3 bg-green-50 border-2 border-green-500 rounded-xl">
+                      <div className="flex items-center space-x-2 text-green-700">
+                        <CheckCircle size={20} />
+                        <span className="font-semibold">{coverLetterFileName}</span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => removeFile('coverLetter')}
+                        className="text-red-600 hover:text-red-700 p-1"
+                      >
+                        <X size={20} />
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
 
               {/* Consent Checkbox */}

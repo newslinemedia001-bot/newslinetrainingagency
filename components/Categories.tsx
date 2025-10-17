@@ -45,7 +45,7 @@ export default function Categories() {
                 className="bg-white rounded-2xl p-6 card-hover cursor-pointer group"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-red-600 to-purple-700 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <div className="w-14 h-14 rounded-xl bg-red-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                   <Icon className="text-white" size={28} />
                 </div>
                 

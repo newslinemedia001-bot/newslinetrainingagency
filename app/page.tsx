@@ -1,6 +1,8 @@
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import Categories from '@/components/Categories';
+import Gallery from '@/components/Gallery';
+import Testimonials from '@/components/Testimonials';
 import ApplicationForm from '@/components/ApplicationForm';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
@@ -11,6 +13,8 @@ export default function Home() {
       <Header />
       <Hero />
       <Categories />
+      <Gallery />
+      <Testimonials />
       <ApplicationForm />
       <Contact />
       <Footer />

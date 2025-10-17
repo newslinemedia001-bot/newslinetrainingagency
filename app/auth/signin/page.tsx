@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useAuth } from '@/lib/auth-context';
-import { Mail, Lock, Loader2 } from 'lucide-react';
+import { Mail, Lock, Loader2, User, Building2 } from 'lucide-react';
 
 export default function SignInPage() {
   const [formData, setFormData] = useState({
@@ -14,8 +14,9 @@ export default function SignInPage() {
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showRoleSelection, setShowRoleSelection] = useState(false);
 
-  const { signInWithEmail, signInWithGoogle } = useAuth();
+  const { signInWithEmail, signInWithGoogle, user } = useAuth();
   const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,19 +42,28 @@ export default function SignInPage() {
     }
   };
 
-  const handleGoogleSignIn = async () => {
+  const handleGoogleSignIn = async (role?: 'student' | 'company') => {
+    if (!role) {
+      setShowRoleSelection(true);
+      return;
+    }
+
     setLoading(true);
     setError('');
 
     try {
-      // For existing users, role is already set
-      // For new users via Google, they should use sign up page
-      await signInWithGoogle('student'); // Default to student for sign in
-      router.push('/dashboard');
+      await signInWithGoogle(role);
+      // Redirect based on role
+      if (role === 'company') {
+        router.push('/company');
+      } else {
+        router.push('/dashboard');
+      }
     } catch (err: any) {
       setError(err.message || 'Failed to sign in with Google');
     } finally {
       setLoading(false);
+      setShowRoleSelection(false);
     }
   };
 
@@ -75,6 +85,55 @@ export default function SignInPage() {
           <h2 className="text-3xl font-bold text-gray-900">Welcome Back</h2>
           <p className="mt-2 text-gray-600">Sign in to your account</p>
         </div>
+
+        {/* Role Selection Modal for Google Sign In */}
+        {showRoleSelection && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-2xl p-8 max-w-md w-full">
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Select Your Role</h3>
+              <p className="text-gray-600 mb-6">Are you signing in as:</p>
+              
+              <div className="space-y-4">
+                <button
+                  onClick={() => handleGoogleSignIn('student')}
+                  className="w-full bg-white border-2 border-gray-200 hover:border-red-600 rounded-xl p-6 transition-all group text-left"
+                >
+                  <div className="flex items-center space-x-4">
+                    <div className="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center group-hover:bg-red-600 transition-colors">
+                      <User className="text-red-600 group-hover:text-white" size={24} />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-gray-900">Student/Individual</h4>
+                      <p className="text-sm text-gray-600">Apply for attachments</p>
+                    </div>
+                  </div>
+                </button>
+
+                <button
+                  onClick={() => handleGoogleSignIn('company')}
+                  className="w-full bg-white border-2 border-gray-200 hover:border-red-600 rounded-xl p-6 transition-all group text-left"
+                >
+                  <div className="flex items-center space-x-4">
+                    <div className="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center group-hover:bg-red-600 transition-colors">
+                      <Building2 className="text-red-600 group-hover:text-white" size={24} />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-gray-900">Company/Organization</h4>
+                      <p className="text-sm text-gray-600">Host attachments</p>
+                    </div>
+                  </div>
+                </button>
+
+                <button
+                  onClick={() => setShowRoleSelection(false)}
+                  className="w-full border-2 border-gray-300 py-3 rounded-lg font-semibold hover:border-gray-400"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className="bg-white rounded-2xl shadow-lg p-8">
           {error && (
@@ -158,8 +217,9 @@ export default function SignInPage() {
 
           {/* Google Sign In */}
           <button
-            onClick={handleGoogleSignIn}
+            onClick={(e) => { e.preventDefault(); handleGoogleSignIn(); }}
             disabled={loading}
+            type="button"
             className="w-full border-2 border-gray-300 hover:border-gray-400 py-3 rounded-xl font-semibold flex items-center justify-center space-x-2 transition-colors disabled:opacity-50"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
