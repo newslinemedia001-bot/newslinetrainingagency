@@ -11,7 +11,7 @@ export default function Contact() {
             Get in <span className="bg-gradient-to-r from-red-600 to-purple-600 bg-clip-text text-transparent">Touch</span>
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Have questions? We're here to help. Reach out to us through any of the channels below.
+            Have questions? We&apos;re here to help. Reach out to us through any of the channels below.
           </p>
         </div>
 
@@ -32,7 +32,7 @@ export default function Contact() {
                     linkcontentdevelopers@gmail.com
                   </a>
                   <p className="text-sm text-gray-600 mt-1">
-                    Send us your queries and we'll respond within 24 hours
+                    Send us your queries and we&apos;ll respond within 24 hours
                   </p>
                 </div>
               </div>

@@ -126,7 +126,7 @@ export default function ApplicationForm() {
               Apply for <span className="bg-gradient-to-r from-red-600 to-purple-600 bg-clip-text text-transparent">Attachment</span>
             </h2>
             <p className="text-lg text-gray-600">
-              Fill out the form below and we'll get back to you if an opportunity matches your profile.
+              Fill out the form below and we&apos;ll get back to you if an opportunity matches your profile.
             </p>
           </div>
 
@@ -383,7 +383,7 @@ export default function ApplicationForm() {
                 <CheckCircle className="text-green-600" size={24} />
                 <div>
                   <p className="font-semibold text-green-800">Application submitted successfully!</p>
-                  <p className="text-sm text-green-600">We'll review your application and get back to you soon.</p>
+                  <p className="text-sm text-green-600">We&apos;ll review your application and get back to you soon.</p>
                 </div>
               </div>
             )}
