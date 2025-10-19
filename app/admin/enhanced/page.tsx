@@ -19,6 +19,8 @@ interface Application {
   course: string;
   status: 'applied' | 'review' | 'approved' | 'rejected';
   assignedCompany?: string;
+  companyDecision?: 'approved' | 'rejected';
+  companyFeedback?: string;
   submittedAt: any;
 }
 
@@ -220,13 +222,14 @@ export default function EnhancedAdminDashboard() {
                     <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Category</th>
                     <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Status</th>
                     <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Company</th>
+                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Company Decision</th>
                     <th className="px-6 py-3 text-center text-xs font-semibold text-gray-700 uppercase">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
                   {applications.length === 0 ? (
                     <tr>
-                      <td colSpan={5} className="px-6 py-8 text-center text-gray-500">
+                      <td colSpan={6} className="px-6 py-8 text-center text-gray-500">
                         No applications yet
                       </td>
                     </tr>
@@ -258,6 +261,26 @@ export default function EnhancedAdminDashboard() {
                             <span className="text-sm text-blue-600 font-semibold">{app.assignedCompany}</span>
                           ) : (
                             <span className="text-sm text-gray-400">Not assigned</span>
+                          )}
+                        </td>
+                        <td className="px-6 py-4">
+                          {app.companyDecision ? (
+                            <div>
+                              <span className={`inline-block px-2 py-1 rounded-full text-xs font-semibold ${
+                                app.companyDecision === 'approved' 
+                                  ? 'bg-green-100 text-green-800' 
+                                  : 'bg-red-100 text-red-800'
+                              }`}>
+                                {app.companyDecision === 'approved' ? '✓ Approved' : '✗ Rejected'}
+                              </span>
+                              {app.companyFeedback && (
+                                <p className="text-xs text-gray-600 mt-1" title={app.companyFeedback}>
+                                  {app.companyFeedback.length > 30 ? app.companyFeedback.substring(0, 30) + '...' : app.companyFeedback}
+                                </p>
+                              )}
+                            </div>
+                          ) : (
+                            <span className="text-sm text-gray-400">Pending</span>
                           )}
                         </td>
                         <td className="px-6 py-4">

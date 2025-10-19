@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/lib/auth-context';
 import ProtectedRoute from '@/components/ProtectedRoute';
-import { collection, query, where, getDocs, orderBy, doc, updateDoc } from 'firebase/firestore';
+import { collection, query, where, getDocs, doc, updateDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { Building2, Users, CheckCircle, XCircle, Mail, Phone, Calendar } from 'lucide-react';
 import Link from 'next/link';
@@ -33,13 +33,16 @@ export default function CompanyDashboard() {
 
   useEffect(() => {
     const fetchStudents = async () => {
-      if (!userProfile?.companyName || !userProfile?.approved) return;
+      const companyName = (userProfile as any)?.companyName || userProfile?.name;
+      if (!companyName || !userProfile?.approved) {
+        setLoading(false);
+        return;
+      }
 
       try {
         const studentsQuery = query(
           collection(db, 'applications'),
-          where('assignedCompany', '==', userProfile.companyName),
-          orderBy('createdAt', 'desc')
+          where('assignedCompany', '==', companyName)
         );
         const snapshot = await getDocs(studentsQuery);
         const data = snapshot.docs.map(doc => ({
@@ -95,7 +98,7 @@ export default function CompanyDashboard() {
             </p>
             <div className="bg-gray-50 rounded-lg p-4 mb-6">
               <p className="text-sm text-gray-700">
-                <strong>Company:</strong> {userProfile.companyName}
+                <strong>Company:</strong> {(userProfile as any).companyName || userProfile.name}
               </p>
               <p className="text-sm text-gray-700">
                 <strong>Email:</strong> {userProfile.email}
@@ -122,7 +125,7 @@ export default function CompanyDashboard() {
                   <Building2 size={24} />
                 </div>
                 <div>
-                  <h1 className="text-2xl font-bold">{userProfile?.companyName}</h1>
+                  <h1 className="text-2xl font-bold">{(userProfile as any)?.companyName || userProfile?.name}</h1>
                   <p className="text-gray-300 text-sm">Company Dashboard</p>
                 </div>
               </div>
