@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/lib/auth-context';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { collection, query, orderBy, onSnapshot, doc, updateDoc, addDoc, where, getDocs } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+import { db, auth } from '@/lib/firebase';
 import { Users, Building2, Mail, Send, ArrowRight, CheckCircle, AlertCircle, XCircle, Clock } from 'lucide-react';
 import Link from 'next/link';
 
@@ -72,8 +72,12 @@ export default function EnhancedAdminDashboard() {
     }
   };
 
-  const handleAssignCompany = async (appId: string, companyName: string) => {
+  const handleAssignCompany = async (appId: string, companyName: string | undefined) => {
     try {
+      if (!companyName) {
+        alert('Company name is missing');
+        return;
+      }
       await updateDoc(doc(db, 'applications', appId), {
         assignedCompany: companyName,
         status: 'review'
@@ -94,6 +98,13 @@ export default function EnhancedAdminDashboard() {
     }
 
     try {
+      // Get current admin user ID
+      const currentUser = auth.currentUser;
+      if (!currentUser) {
+        alert('You must be logged in to send messages');
+        return;
+      }
+
       // Find user by email
       const usersQuery = query(collection(db, 'users'), where('email', '==', selectedApp.email));
       const usersSnapshot = await getDocs(usersQuery);
@@ -107,7 +118,7 @@ export default function EnhancedAdminDashboard() {
 
       // Create message
       await addDoc(collection(db, 'messages'), {
-        from: userProfile?.uid,
+        from: currentUser.uid,
         to: userId,
         subject: messageData.subject,
         body: messageData.body,
@@ -285,9 +296,11 @@ export default function EnhancedAdminDashboard() {
                       key={company.uid}
                       onClick={() => handleAssignCompany(selectedApp.id, company.companyName)}
                       className="w-full text-left p-4 border-2 border-gray-200 hover:border-red-600 rounded-lg transition-colors"
+                      disabled={!company.companyName}
                     >
-                      <div className="font-semibold text-gray-900">{company.companyName}</div>
+                      <div className="font-semibold text-gray-900">{company.companyName || 'Unnamed Company'}</div>
                       <div className="text-sm text-gray-600">{company.email}</div>
+                      {!company.companyName && <div className="text-xs text-red-600">Company name missing</div>}
                     </button>
                   ))}
                 </div>

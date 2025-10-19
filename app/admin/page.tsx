@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { signInWithEmailAndPassword, signOut, onAuthStateChanged, User } from 'firebase/auth';
 import { auth, db } from '@/lib/firebase';
-import { collection, query, orderBy, onSnapshot, deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import { collection, query, orderBy, onSnapshot, deleteDoc, doc, updateDoc, getDoc } from 'firebase/firestore';
 import { LogIn, LogOut, Mail, Phone, Calendar, Trash2, Eye, Filter, Download } from 'lucide-react';
 import { format } from 'date-fns';
 
@@ -26,6 +26,7 @@ interface Application {
 
 export default function AdminPage() {
   const [user, setUser] = useState<User | null>(null);
+  const [userRole, setUserRole] = useState<string | null>(null);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -35,8 +36,38 @@ export default function AdminPage() {
   const [filterStatus, setFilterStatus] = useState<string>('all');
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        // Check if user has admin role
+        const userDoc = await getDoc(doc(db, 'users', user.uid));
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          const role = userData.role;
+          setUserRole(role);
+          
+          // If user is not admin, sign them out
+          if (role !== 'admin') {
+            await signOut(auth);
+            setUser(null);
+            setUserRole(null);
+            setError('Access denied. Admin privileges required. Please log in with an admin account.');
+            setLoading(false);
+            return;
+          }
+        } else {
+          // No user document found, sign them out
+          await signOut(auth);
+          setUser(null);
+          setUserRole(null);
+          setError('Admin account not found. Please log in with an admin account.');
+          setLoading(false);
+          return;
+        }
+        setUser(user);
+      } else {
+        setUser(null);
+        setUserRole(null);
+      }
       setLoading(false);
     });
 
@@ -44,7 +75,7 @@ export default function AdminPage() {
   }, []);
 
   useEffect(() => {
-    if (user) {
+    if (user && userRole === 'admin') {
       const applicationsRef = collection(db, 'applications');
       const q = query(applicationsRef, orderBy('submittedAt', 'desc'));
 
@@ -58,7 +89,7 @@ export default function AdminPage() {
 
       return () => unsubscribe();
     }
-  }, [user]);
+  }, [user, userRole]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -144,7 +175,7 @@ export default function AdminPage() {
     );
   }
 
-  if (!user) {
+  if (!user || userRole !== 'admin') {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-600 to-red-700 p-4">
         <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md">

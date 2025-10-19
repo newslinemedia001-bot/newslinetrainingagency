@@ -105,6 +105,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signInWithGoogle = async (role: 'student' | 'company') => {
     const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({
+      prompt: 'select_account'
+    });
     const { user } = await signInWithPopup(auth, provider);
     
     // Check if user profile exists
