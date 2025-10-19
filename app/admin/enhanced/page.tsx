@@ -5,7 +5,7 @@ import { useAuth } from '@/lib/auth-context';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { collection, query, orderBy, onSnapshot, doc, updateDoc, addDoc, where, getDocs } from 'firebase/firestore';
 import { db, auth } from '@/lib/firebase';
-import { Users, Building2, Mail, Send, ArrowRight, CheckCircle, AlertCircle, XCircle, Clock } from 'lucide-react';
+import { Users, Building2, Mail, Send, ArrowRight, CheckCircle, AlertCircle, XCircle, Clock, FileText, Download } from 'lucide-react';
 import Link from 'next/link';
 
 interface Application {
@@ -21,6 +21,8 @@ interface Application {
   assignedCompany?: string;
   companyDecision?: 'approved' | 'rejected';
   companyFeedback?: string;
+  cvUrl?: string;
+  coverLetterUrl?: string;
   submittedAt: any;
 }
 
@@ -223,13 +225,14 @@ export default function EnhancedAdminDashboard() {
                     <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Status</th>
                     <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Company</th>
                     <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Company Decision</th>
+                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase">Documents</th>
                     <th className="px-6 py-3 text-center text-xs font-semibold text-gray-700 uppercase">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
                   {applications.length === 0 ? (
                     <tr>
-                      <td colSpan={6} className="px-6 py-8 text-center text-gray-500">
+                      <td colSpan={7} className="px-6 py-8 text-center text-gray-500">
                         No applications yet
                       </td>
                     </tr>
@@ -282,6 +285,37 @@ export default function EnhancedAdminDashboard() {
                           ) : (
                             <span className="text-sm text-gray-400">Pending</span>
                           )}
+                        </td>
+                        <td className="px-6 py-4">
+                          <div className="flex flex-col gap-1">
+                            {app.cvUrl && (
+                              <a
+                                href={app.cvUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center space-x-1 text-xs text-blue-600 hover:text-blue-800"
+                                title="View CV/Resume"
+                              >
+                                <FileText size={14} />
+                                <span>CV</span>
+                              </a>
+                            )}
+                            {app.coverLetterUrl && (
+                              <a
+                                href={app.coverLetterUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center space-x-1 text-xs text-green-600 hover:text-green-800"
+                                title="View Cover Letter"
+                              >
+                                <FileText size={14} />
+                                <span>Letter</span>
+                              </a>
+                            )}
+                            {!app.cvUrl && !app.coverLetterUrl && (
+                              <span className="text-xs text-gray-400">None</span>
+                            )}
+                          </div>
                         </td>
                         <td className="px-6 py-4">
                           <div className="flex items-center justify-center space-x-2">

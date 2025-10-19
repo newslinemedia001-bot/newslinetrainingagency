@@ -5,7 +5,7 @@ import { useAuth } from '@/lib/auth-context';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { collection, query, where, getDocs, doc, updateDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
-import { Building2, Users, CheckCircle, XCircle, Mail, Phone, Calendar } from 'lucide-react';
+import { Building2, Users, CheckCircle, XCircle, Mail, Phone, Calendar, FileText, Download } from 'lucide-react';
 import Link from 'next/link';
 
 interface Student {
@@ -21,6 +21,8 @@ interface Student {
   availability: string;
   duration: string;
   coverLetter: string;
+  cvUrl?: string;
+  coverLetterUrl?: string;
   status: string;
   createdAt: any;
 }
@@ -239,8 +241,42 @@ export default function CompanyDashboard() {
 
                     <div className="mb-4">
                       <p className="text-sm font-semibold text-gray-700 mb-2">Cover Letter:</p>
-                      <p className="text-sm text-gray-600">{student.coverLetter}</p>
+                      <p className="text-sm text-gray-600 whitespace-pre-wrap">{student.coverLetter}</p>
                     </div>
+
+                    {/* Documents Section */}
+                    {(student.cvUrl || student.coverLetterUrl) && (
+                      <div className="mb-4 p-4 bg-blue-50 rounded-lg">
+                        <p className="text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                          <FileText className="mr-2" size={18} />
+                          Documents
+                        </p>
+                        <div className="flex flex-wrap gap-3">
+                          {student.cvUrl && (
+                            <a
+                              href={student.cvUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center space-x-2 px-4 py-2 bg-white border-2 border-blue-600 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition-colors font-semibold"
+                            >
+                              <Download size={16} />
+                              <span>Download CV/Resume</span>
+                            </a>
+                          )}
+                          {student.coverLetterUrl && (
+                            <a
+                              href={student.coverLetterUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center space-x-2 px-4 py-2 bg-white border-2 border-green-600 text-green-600 rounded-lg hover:bg-green-600 hover:text-white transition-colors font-semibold"
+                            >
+                              <Download size={16} />
+                              <span>Download Cover Letter</span>
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    )}
 
                     {!(student as any).companyDecision && (
                       <div className="flex space-x-3 pt-4 border-t">
