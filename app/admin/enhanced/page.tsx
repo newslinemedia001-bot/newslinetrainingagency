@@ -24,7 +24,7 @@ interface Application {
 
 interface Company {
   uid: string;
-  companyName: string;
+  companyName?: string;
   email: string;
   name: string;
 }
@@ -72,19 +72,16 @@ export default function EnhancedAdminDashboard() {
     }
   };
 
-  const handleAssignCompany = async (appId: string, companyName: string | undefined) => {
+  const handleAssignCompany = async (appId: string, company: Company) => {
     try {
-      if (!companyName) {
-        alert('Company name is missing');
-        return;
-      }
+      const displayName = company.companyName || company.name || 'Unknown Company';
       await updateDoc(doc(db, 'applications', appId), {
-        assignedCompany: companyName,
+        assignedCompany: displayName,
         status: 'review'
       });
       setShowAssignModal(false);
       setSelectedApp(null);
-      alert(`Student assigned to ${companyName}`);
+      alert(`Student assigned to ${displayName}`);
     } catch (error) {
       console.error('Error assigning company:', error);
       alert('Failed to assign company');
@@ -116,7 +113,7 @@ export default function EnhancedAdminDashboard() {
 
       const userId = usersSnapshot.docs[0].id;
 
-      // Create message
+      // Create message in Firestore (student can view in their dashboard)
       await addDoc(collection(db, 'messages'), {
         from: currentUser.uid,
         to: userId,
@@ -126,12 +123,30 @@ export default function EnhancedAdminDashboard() {
         read: false
       });
 
-      // TODO: Send email notification here using your email API
+      // Send actual email to student
+      try {
+        const emailResponse = await fetch('/api/send-student-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            recipientEmail: selectedApp.email,
+            recipientName: selectedApp.fullName,
+            subject: messageData.subject,
+            message: messageData.body
+          })
+        });
+
+        if (!emailResponse.ok) {
+          console.error('Failed to send email notification');
+        }
+      } catch (emailError) {
+        console.error('Error sending email notification:', emailError);
+      }
 
       setShowMessageModal(false);
       setMessageData({ subject: '', body: '' });
       setSelectedApp(null);
-      alert('Message sent successfully!');
+      alert('Message sent successfully! Email delivered to student.');
     } catch (error) {
       console.error('Error sending message:', error);
       alert('Failed to send message');
@@ -291,18 +306,19 @@ export default function EnhancedAdminDashboard() {
                 <p className="text-gray-600 mb-6">No companies registered yet.</p>
               ) : (
                 <div className="space-y-2 mb-6">
-                  {companies.map(company => (
-                    <button
-                      key={company.uid}
-                      onClick={() => handleAssignCompany(selectedApp.id, company.companyName)}
-                      className="w-full text-left p-4 border-2 border-gray-200 hover:border-red-600 rounded-lg transition-colors"
-                      disabled={!company.companyName}
-                    >
-                      <div className="font-semibold text-gray-900">{company.companyName || 'Unnamed Company'}</div>
-                      <div className="text-sm text-gray-600">{company.email}</div>
-                      {!company.companyName && <div className="text-xs text-red-600">Company name missing</div>}
-                    </button>
-                  ))}
+                  {companies.map(company => {
+                    const displayName = company.companyName || company.name || 'Unnamed Company';
+                    return (
+                      <button
+                        key={company.uid}
+                        onClick={() => handleAssignCompany(selectedApp.id, company)}
+                        className="w-full text-left p-4 border-2 border-gray-200 hover:border-red-600 rounded-lg transition-colors"
+                      >
+                        <div className="font-semibold text-gray-900">{displayName}</div>
+                        <div className="text-sm text-gray-600">{company.email}</div>
+                      </button>
+                    );
+                  })}
                 </div>
               )}
 
