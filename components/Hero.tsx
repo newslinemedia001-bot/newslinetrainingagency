@@ -28,10 +28,10 @@ export default function Hero() {
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               {/* Left Column - Content */}
               <div className="text-center lg:text-left animate-fade-in">
-                <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-black mb-6 leading-tight">
-                  Launch Your Career with
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-black mb-6 leading-tight">
+                  Newsline Media & Training Agency
                   <span className="bg-gradient-to-r from-red-600 to-purple-600 bg-clip-text text-transparent block mt-2">
-                    Professional Training
+                    Kenya&apos;s Leading Media, PR, IT Attachment Placement Center
                   </span>
                 </h1>
 

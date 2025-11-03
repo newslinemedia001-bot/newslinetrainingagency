@@ -35,54 +35,19 @@ export default function Header() {
             </div>
           </Link>
 
-          {/* Enhanced Contact & Opportunity Banner */}
-          <div className="hidden lg:flex items-center justify-center flex-1">
-            <div className="contact-banner bg-gradient-to-r from-red-600 via-red-700 to-red-800 rounded-2xl px-8 py-5 shadow-2xl border-2 border-red-400 w-full max-w-3xl">
-              <div className="flex items-center justify-between text-white text-sm overflow-hidden">
-                {/* Left Section - Opportunity Message */}
-                <div className="flex items-center space-x-2">
-                  <Briefcase size={22} className="contact-icon-bounce text-yellow-300" />
-                  <div className="flex flex-col">
-                    <span className="text-sm font-bold text-yellow-300">JOIN US TODAY!</span>
-                    <span className="text-xs">Attachment Opportunities</span>
-                  </div>
-                </div>
-
-                {/* Center Section - Contact Info */}
-                <div className="flex items-center space-x-6">
-                  <div className="flex items-center space-x-2">
-                    <Mail size={20} className="contact-icon-bounce" />
-                    <a 
-                      href="mailto:newslinedigitaltv@gmail.com" 
-                      className="text-sm font-medium hover:text-yellow-300 transition-colors"
-                    >
-                      newslinedigitaltv@gmail.com
-                    </a>
-                  </div>
-                  <div className="w-px h-8 bg-white/30"></div>
-                  <div className="flex items-center space-x-2">
-                    <Phone size={20} className="contact-icon-bounce" style={{ animationDelay: '1s' }} />
-                    <a 
-                      href="tel:0742577038" 
-                      className="text-sm font-medium hover:text-yellow-300 transition-colors"
-                    >
-                      0742577038
-                    </a>
-                  </div>
-                </div>
-
-                {/* Right Section - Clickable Call to Action */}
-                <div className="flex items-center">
-                  <Link href="/#apply" className="flex items-center space-x-2 hover:scale-105 transition-transform cursor-pointer">
-                    <Star size={20} className="text-yellow-300 animate-pulse" />
-                    <div className="flex flex-col text-right">
-                      <span className="text-sm font-bold text-yellow-300">APPLY NOW</span>
-                      <span className="text-xs">Start Career</span>
-                    </div>
-                  </Link>
-                </div>
+          {/* Banner Image */}
+          <div className="hidden lg:flex items-center justify-center flex-1 mx-2">
+            <Link href="/#apply" className="w-full max-w-4xl">
+              <div className="relative w-full h-28 rounded-xl overflow-hidden shadow-2xl hover:shadow-red-500/50 transition-all bg-black">
+                <Image
+                  src="/banner.jpg"
+                  alt="Newsline Training Agency - Attachment Opportunities"
+                  fill
+                  className="object-contain"
+                  priority
+                />
               </div>
-            </div>
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
