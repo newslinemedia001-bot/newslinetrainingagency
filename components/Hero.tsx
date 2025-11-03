@@ -21,7 +21,7 @@ export default function Hero() {
             <div className="flex justify-center mb-8">
               <div className="inline-flex items-center space-x-2 bg-red-50 border border-red-200 rounded-full px-6 py-2">
                 <Award className="text-red-600" size={20} />
-                <span className="text-sm font-semibold text-red-600">Kenya's Leading Training Agency</span>
+                <span className="text-sm font-semibold text-red-600">Kenya&apos;s Leading Training Agency</span>
               </div>
             </div>
 
@@ -37,7 +37,7 @@ export default function Hero() {
 
                 <p className="text-xl text-gray-700 mb-8 leading-relaxed">
                   Join our comprehensive attachment programs across <span className="font-semibold text-red-600">Media, IT, Film Production</span>,
-                  and various other exciting fields. Whether you're a student seeking real-world experience
+                  and various other exciting fields. Whether you&apos;re a student seeking real-world experience
                   or a company looking for talented attachment students and partnership opportunities.
                 </p>
 
