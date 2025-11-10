@@ -1,10 +1,11 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
+import { collection, query, where, getDocs, orderBy, limit } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
-import { X } from 'lucide-react';
+import { X, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface GalleryImage {
   id: string;
@@ -25,7 +26,8 @@ export default function Gallery() {
         const galleryQuery = query(
           collection(db, 'gallery'),
           where('published', '==', true),
-          orderBy('createdAt', 'desc')
+          orderBy('createdAt', 'desc'),
+          limit(8)
         );
         const snapshot = await getDocs(galleryQuery);
         const data = snapshot.docs.map(doc => ({
@@ -72,11 +74,11 @@ export default function Gallery() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
             {images.map((image, index) => (
               <div
                 key={image.id}
-                className="relative aspect-square rounded-2xl overflow-hidden cursor-pointer group"
+                className="relative aspect-square rounded-xl overflow-hidden cursor-pointer group shadow-md hover:shadow-xl transition-shadow"
                 style={{ animationDelay: `${index * 50}ms` }}
                 onClick={() => setSelectedImage(image)}
               >
@@ -84,20 +86,21 @@ export default function Gallery() {
                   src={image.imageUrl}
                   alt={image.title}
                   fill
-                  className="object-cover transition-transform duration-300 group-hover:scale-110"
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="absolute bottom-0 left-0 right-0 p-4">
-                    <h3 className="text-white font-bold text-lg">{image.title}</h3>
-                    {image.category && (
-                      <span className="inline-block px-2 py-1 bg-red-600 text-white text-xs rounded-full mt-2">
-                        {image.category}
-                      </span>
-                    )}
-                  </div>
-                </div>
               </div>
             ))}
+          </div>
+
+          {/* View All Button */}
+          <div className="text-center mt-12">
+            <Link
+              href="/gallery"
+              className="inline-flex items-center space-x-2 bg-red-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-red-700 transition-all shadow-lg hover:shadow-xl"
+            >
+              <span>View Full Gallery</span>
+              <ArrowRight size={20} />
+            </Link>
           </div>
         </div>
       </section>

@@ -67,7 +67,7 @@ export default function Testimonials() {
             Success <span className="text-red-600">Stories</span>
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Hear from our students who have successfully completed their attachments
+            Voices from Our Community
           </p>
         </div>
 
@@ -80,9 +80,9 @@ export default function Testimonials() {
             >
               <Quote className="absolute top-4 right-4 text-red-600 opacity-20" size={48} />
               
-              <div className="flex items-center space-x-4 mb-6">
+              <div className="flex flex-col items-center text-center mb-6">
                 {testimonial.imageUrl ? (
-                  <div className="relative w-16 h-16 rounded-full overflow-hidden">
+                  <div className="relative w-32 h-32 rounded-full overflow-hidden flex-shrink-0 ring-4 ring-red-100 mb-4">
                     <Image
                       src={testimonial.imageUrl}
                       alt={testimonial.name}
@@ -91,12 +91,12 @@ export default function Testimonials() {
                     />
                   </div>
                 ) : (
-                  <div className="w-16 h-16 rounded-full bg-red-600 flex items-center justify-center text-white font-bold text-xl">
+                  <div className="w-32 h-32 rounded-full bg-red-600 flex items-center justify-center text-white font-bold text-5xl flex-shrink-0 mb-4">
                     {testimonial.name.charAt(0)}
                   </div>
                 )}
                 <div>
-                  <h3 className="font-bold text-gray-900">{testimonial.name}</h3>
+                  <h3 className="font-bold text-gray-900 text-xl">{testimonial.name}</h3>
                   <p className="text-sm text-gray-600">{testimonial.role}</p>
                   <p className="text-sm text-red-600 font-semibold">{testimonial.company}</p>
                 </div>

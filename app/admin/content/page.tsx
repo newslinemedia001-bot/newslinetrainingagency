@@ -39,45 +39,104 @@ export default function AdminContentPage() {
   };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, type: 'gallery' | 'testimonial') => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
 
-    if (!file.type.startsWith('image/')) {
-      alert('Please upload an image file');
-      return;
-    }
+    // For testimonials, only allow single image
+    if (type === 'testimonial') {
+      const file = files[0];
+      if (!file.type.startsWith('image/')) {
+        alert('Please upload an image file');
+        return;
+      }
 
-    if (file.size > 5 * 1024 * 1024) {
-      alert('File size must be less than 5MB');
-      return;
-    }
+      if (file.size > 5 * 1024 * 1024) {
+        alert('File size must be less than 5MB');
+        return;
+      }
 
-    setUploading(true);
-    const setFileName = type === 'gallery' ? setUploadedImageName : setUploadedTestimonialImageName;
-    setFileName(file.name);
+      setUploading(true);
+      setUploadedTestimonialImageName(file.name);
 
-    try {
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || 'newslinetrainingagency');
+      try {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || 'newslinetrainingagency');
 
-      const response = await fetch(
-        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || 'dlvgrs5vp'}/image/upload`,
-        { method: 'POST', body: formData }
-      );
+        const response = await fetch(
+          `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || 'dlvgrs5vp'}/image/upload`,
+          { method: 'POST', body: formData }
+        );
 
-      const data = await response.json();
+        const data = await response.json();
 
-      if (data.secure_url) {
-        if (type === 'gallery') {
-          setGalleryForm(prev => ({ ...prev, imageUrl: data.secure_url }));
-        } else {
+        if (data.secure_url) {
           setTestimonialForm(prev => ({ ...prev, imageUrl: data.secure_url }));
         }
+      } catch (error) {
+        alert('Failed to upload image');
+        setUploadedTestimonialImageName('');
+      } finally {
+        setUploading(false);
       }
+      return;
+    }
+
+    // For gallery, allow multiple images
+    setUploading(true);
+    const fileArray = Array.from(files);
+    
+    // Validate all files
+    for (const file of fileArray) {
+      if (!file.type.startsWith('image/')) {
+        alert(`${file.name} is not an image file`);
+        setUploading(false);
+        return;
+      }
+      if (file.size > 5 * 1024 * 1024) {
+        alert(`${file.name} is larger than 5MB`);
+        setUploading(false);
+        return;
+      }
+    }
+
+    setUploadedImageName(`Uploading ${fileArray.length} image(s)...`);
+
+    try {
+      let successCount = 0;
+      
+      for (const file of fileArray) {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || 'newslinetrainingagency');
+
+        const response = await fetch(
+          `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || 'dlvgrs5vp'}/image/upload`,
+          { method: 'POST', body: formData }
+        );
+
+        const data = await response.json();
+
+        if (data.secure_url) {
+          // Add each image directly to gallery
+          await addDoc(collection(db, 'gallery'), {
+            title: file.name.replace(/\.[^/.]+$/, ''), // Remove extension
+            description: '',
+            category: '',
+            imageUrl: data.secure_url,
+            published: true,
+            createdAt: new Date()
+          });
+          successCount++;
+        }
+      }
+
+      setUploadedImageName('');
+      fetchGallery();
+      alert(`Successfully uploaded ${successCount} image(s) to gallery!`);
     } catch (error) {
-      alert('Failed to upload image');
-      setFileName('');
+      alert('Failed to upload some images');
+      setUploadedImageName('');
     } finally {
       setUploading(false);
     }
@@ -192,29 +251,24 @@ export default function AdminContentPage() {
                   <h3 className="text-lg font-bold mb-4">Add Gallery Image</h3>
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-sm font-semibold mb-2">Image *</label>
-                      {!galleryForm.imageUrl ? (
-                        <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer hover:border-red-600 transition-colors">
-                          <input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, 'gallery')} className="hidden" />
-                          {uploading ? <Loader2 className="animate-spin text-red-600" size={32} /> : <><Upload size={32} /><span className="text-sm mt-2">{uploadedImageName || 'Upload Image'}</span></>}
-                        </label>
-                      ) : (
-                        <div className="relative w-full h-32">
-                          <Image src={galleryForm.imageUrl} alt="Preview" fill className="object-cover rounded-lg" />
-                          <button onClick={() => { setGalleryForm(prev => ({ ...prev, imageUrl: '' })); setUploadedImageName(''); }} className="absolute top-2 right-2 bg-red-600 text-white p-1 rounded-full">
-                            <X size={16} />
-                          </button>
-                        </div>
-                      )}
+                      <label className="block text-sm font-semibold mb-2">Upload Multiple Images</label>
+                      <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer hover:border-red-600 transition-colors">
+                        <input type="file" accept="image/*" multiple onChange={(e) => handleImageUpload(e, 'gallery')} className="hidden" />
+                        {uploading ? (
+                          <div className="text-center">
+                            <Loader2 className="animate-spin text-red-600 mx-auto" size={32} />
+                            <span className="text-sm mt-2 block">{uploadedImageName}</span>
+                          </div>
+                        ) : (
+                          <>
+                            <Upload size={32} />
+                            <span className="text-sm mt-2 font-semibold">Click to upload multiple images</span>
+                            <span className="text-xs text-gray-500 mt-1">Images will be added directly to gallery</span>
+                          </>
+                        )}
+                      </label>
+                      <p className="text-xs text-gray-600 mt-2">Select multiple images at once. Each will be uploaded and added to the gallery automatically.</p>
                     </div>
-                    <input type="text" placeholder="Title *" value={galleryForm.title} onChange={(e) => setGalleryForm(prev => ({ ...prev, title: e.target.value }))} className="w-full px-4 py-2 border rounded-lg" />
-                    <input type="text" placeholder="Description" value={galleryForm.description} onChange={(e) => setGalleryForm(prev => ({ ...prev, description: e.target.value }))} className="w-full px-4 py-2 border rounded-lg" />
-                    <input type="text" placeholder="Category" value={galleryForm.category} onChange={(e) => setGalleryForm(prev => ({ ...prev, category: e.target.value }))} className="w-full px-4 py-2 border rounded-lg" />
-                    <label className="flex items-center space-x-2">
-                      <input type="checkbox" checked={galleryForm.published} onChange={(e) => setGalleryForm(prev => ({ ...prev, published: e.target.checked }))} className="w-4 h-4" />
-                      <span className="text-sm">Publish immediately</span>
-                    </label>
-                    <button onClick={handleAddGallery} className="w-full btn-primary text-white py-2 rounded-lg">Add to Gallery</button>
                   </div>
                 </div>
               </div>

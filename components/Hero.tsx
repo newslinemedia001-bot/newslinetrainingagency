@@ -79,44 +79,31 @@ export default function Hero() {
                 </div>
               </div>
 
-              {/* Right Column - Visual Element */}
+              {/* Right Column - Mission Statement */}
               <div className="relative">
-                <div className="relative w-full max-w-lg mx-auto">
-                  {/* Main Logo Circle */}
-                  <div className="relative w-80 h-80 mx-auto bg-white rounded-full shadow-2xl p-8 flex items-center justify-center border-4 border-red-100">
-                    <Image
-                      src="/logo.png"
-                      alt="Newsline Training Agency"
-                      width={280}
-                      height={280}
-                      className="object-contain"
-                      priority
-                    />
+                <div className="bg-white rounded-3xl shadow-2xl p-8 border-l-4 border-red-600">
+                  <div className="mb-6">
+                    <h3 className="text-2xl font-bold text-gray-900 mb-2">Mission Statement</h3>
+                    <p className="text-sm text-red-600 font-semibold">From the Director — Faith Mukundi</p>
                   </div>
-
-                  {/* Floating Cards */}
-                  <div className="absolute -top-4 -left-4 bg-white rounded-2xl shadow-xl p-4 animate-bounce" style={{ animationDuration: '3s' }}>
-                    <div className="flex items-center space-x-3">
-                      <div className="bg-red-100 p-3 rounded-xl">
-                        <Users className="text-red-600" size={24} />
-                      </div>
-                      <div>
-                        <div className="text-2xl font-bold text-gray-900">500+</div>
-                        <div className="text-sm text-gray-600">Students Trained</div>
-                      </div>
-                    </div>
+                  
+                  <div className="space-y-4 text-gray-700 leading-relaxed">
+                    <p>
+                      At Newsline Media and Training Agency, our mission is to bridge the gap between learning and industry by offering practical, hands-on attachment opportunities in both media and information technology. We believe true mastery comes through experience — that&apos;s why our approach blends classroom instruction with real-world exposure to ensure our trainees are fully prepared for the job market.
+                    </p>
+                    
+                    <p>
+                      We are dedicated to nurturing creative and tech-driven minds who can tell impactful stories, manage modern communication tools, and adapt to the fast-changing digital landscape. Through strong partnerships with leading media houses, IT firms, and corporate organizations, we provide our students with meaningful attachment placements that build confidence, competence, and character.
+                    </p>
+                    
+                    <p>
+                      At Newsline Media and Training Agency, we don&apos;t just train — we connect talent to opportunity, shaping professionals who are ready to inform, innovate, and inspire change in their communities and beyond.
+                    </p>
                   </div>
-
-                  <div className="absolute -bottom-4 -right-4 bg-white rounded-2xl shadow-xl p-4 animate-bounce" style={{ animationDuration: '3s', animationDelay: '1s' }}>
-                    <div className="flex items-center space-x-3">
-                      <div className="bg-purple-100 p-3 rounded-xl">
-                        <TrendingUp className="text-purple-600" size={24} />
-                      </div>
-                      <div>
-                        <div className="text-2xl font-bold text-gray-900">95%</div>
-                        <div className="text-sm text-gray-600">Success Rate</div>
-                      </div>
-                    </div>
+                  
+                  <div className="mt-6 pt-6 border-t border-gray-200">
+                    <p className="text-gray-900 font-bold">— Faith Mukundi</p>
+                    <p className="text-sm text-gray-600">Managing Director, Newsline Media and Training Agency</p>
                   </div>
                 </div>
               </div>

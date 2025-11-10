@@ -21,24 +21,10 @@ export default function Header() {
     <header className="w-full bg-black shadow-sm overflow-hidden">
       <div className="w-full px-0">
         <div className="flex items-center h-42">
-          <Link href="/" className="flex items-center flex-shrink-0 -ml-16">
-            <div className="flex items-center">
-              <div className="relative w-80 h-24">
-                <Image
-                  src="/logo.png"
-                  alt="Newsline Training Agency"
-                  fill
-                  className="object-contain"
-                  priority
-                />
-              </div>
-            </div>
-          </Link>
-
-          {/* Banner Image */}
-          <div className="hidden lg:flex items-center justify-center flex-1 mx-2">
-            <Link href="/#apply" className="w-full max-w-4xl">
-              <div className="relative w-full h-28 rounded-xl overflow-hidden shadow-2xl hover:shadow-red-500/50 transition-all bg-black">
+          {/* Banner Image - Full Width */}
+          <div className="hidden lg:flex items-center justify-start flex-1 pl-4">
+            <Link href="/#apply" className="w-full max-w-5xl">
+              <div className="relative w-full h-40 rounded-xl overflow-hidden shadow-2xl hover:shadow-red-500/50 transition-all bg-black">
                 <Image
                   src="/banner.jpg"
                   alt="Newsline Training Agency - Attachment Opportunities"

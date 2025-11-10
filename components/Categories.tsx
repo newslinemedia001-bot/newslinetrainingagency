@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { categories } from '@/lib/categories';
 import { 
   Tv, 
@@ -53,9 +54,10 @@ export default function Categories() {
           {categories.map((category, index) => {
             const Icon = categoryIcons[category.id];
             return (
-              <div
+              <Link
                 key={category.id}
-                className="bg-white rounded-2xl p-6 card-hover cursor-pointer group"
+                href="/#apply"
+                className="bg-white rounded-2xl p-6 card-hover cursor-pointer group block"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 <div className="w-14 h-14 rounded-xl bg-red-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
@@ -65,7 +67,7 @@ export default function Categories() {
                 <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-red-600 transition-colors">
                   {category.name}
                 </h3>
-              </div>
+              </Link>
             );
           })}
         </div>
