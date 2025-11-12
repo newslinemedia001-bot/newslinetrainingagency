@@ -93,7 +93,7 @@ export default function Categories() {
 
         {/* Bottom CTA */}
         <div className="text-center mt-12">
-          <p className="text-gray-600 mb-4">Can't find what you're looking for?</p>
+          <p className="text-gray-600 mb-4">Can&apos;t find what you&apos;re looking for?</p>
           <Link
             href="/#contact"
             className="inline-flex items-center space-x-2 text-red-600 hover:text-red-700 font-semibold transition-colors"
