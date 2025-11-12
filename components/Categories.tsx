@@ -39,9 +39,18 @@ const categoryIcons: { [key: string]: any } = {
 
 export default function Categories() {
   return (
-    <section id="categories" className="py-20 bg-gray-50">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="categories" className="py-20 bg-gradient-to-br from-gray-50 via-white to-blue-50 relative overflow-hidden">
+      {/* Background Decoration */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-10 left-10 w-72 h-72 bg-red-600 rounded-full filter blur-3xl"></div>
+        <div className="absolute bottom-10 right-10 w-72 h-72 bg-blue-600 rounded-full filter blur-3xl"></div>
+      </div>
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16 animate-fade-in">
+          <div className="inline-flex items-center space-x-2 bg-red-50 border border-red-200 rounded-full px-6 py-2 mb-4">
+            <span className="text-sm font-semibold text-red-600">15+ Specializations Available</span>
+          </div>
           <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
             Explore <span className="text-red-600">Our Categories</span>
           </h2>
@@ -57,19 +66,43 @@ export default function Categories() {
               <Link
                 key={category.id}
                 href="/#apply"
-                className="bg-white rounded-2xl p-6 card-hover cursor-pointer group block"
+                className="bg-white rounded-2xl p-6 shadow-md hover:shadow-2xl cursor-pointer group block border border-gray-100 hover:border-red-200 transition-all duration-300"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
-                <div className="w-14 h-14 rounded-xl bg-red-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <Icon className="text-white" size={28} />
+                <div className="relative">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg">
+                    <Icon className="text-white" size={32} />
+                  </div>
+                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-blue-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 </div>
                 
-                <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-red-600 transition-colors">
+                <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-red-600 transition-colors leading-tight">
                   {category.name}
                 </h3>
+                
+                <div className="flex items-center text-sm text-gray-500 group-hover:text-red-600 transition-colors mt-3">
+                  <span>Learn more</span>
+                  <svg className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
               </Link>
             );
           })}
+        </div>
+
+        {/* Bottom CTA */}
+        <div className="text-center mt-12">
+          <p className="text-gray-600 mb-4">Can't find what you're looking for?</p>
+          <Link
+            href="/#contact"
+            className="inline-flex items-center space-x-2 text-red-600 hover:text-red-700 font-semibold transition-colors"
+          >
+            <span>Contact us for custom programs</span>
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </Link>
         </div>
       </div>
     </section>

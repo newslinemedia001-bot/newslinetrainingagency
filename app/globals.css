@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --newsline-red: #DC2626;
-  --newsline-darkred: #B91C1C;
+  --newsline-blue: #1e40af;
+  --newsline-darkblue: #1e3a8a;
   --newsline-gray: #374151;
   --newsline-dark: #1F2937;
 }
@@ -24,11 +24,11 @@ body {
 }
 
 .gradient-bg {
-  background: linear-gradient(135deg, #DC2626 0%, #B91C1C 100%);
+  background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #DC2626 0%, #EF4444 100%);
+  background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -44,14 +44,14 @@ body {
 }
 
 .btn-primary {
-  background: #DC2626;
+  background: #1e40af;
   transition: all 0.3s ease;
 }
 
 .btn-primary:hover {
-  background: #B91C1C;
+  background: #1e3a8a;
   transform: translateY(-2px);
-  box-shadow: 0 10px 15px -3px rgba(220, 38, 38, 0.4);
+  box-shadow: 0 10px 15px -3px rgba(30, 64, 175, 0.4);
 }
 
 .animate-fade-in {
@@ -71,8 +71,8 @@ body {
 
 .hero-pattern {
   background-image: 
-    radial-gradient(circle at 20% 50%, rgba(220, 38, 38, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(220, 38, 38, 0.05) 0%, transparent 50%);
+    radial-gradient(circle at 20% 50%, rgba(30, 64, 175, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(30, 64, 175, 0.05) 0%, transparent 50%);
 }
 /* Contact Banner Animations */
 .contact-banner {
@@ -92,10 +92,10 @@ body {
 
 @keyframes glow {
   from {
-    box-shadow: 0 0 10px rgba(220, 38, 38, 0.5);
+    box-shadow: 0 0 10px rgba(30, 64, 175, 0.5);
   }
   to {
-    box-shadow: 0 0 20px rgba(220, 38, 38, 0.8), 0 0 30px rgba(220, 38, 38, 0.4);
+    box-shadow: 0 0 20px rgba(30, 64, 175, 0.8), 0 0 30px rgba(30, 64, 175, 0.4);
   }
 }
 

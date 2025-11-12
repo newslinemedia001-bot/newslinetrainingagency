@@ -8,7 +8,7 @@ export default function Hero() {
   return (
     <>
       {/* Main Hero Section */}
-      <section className="relative bg-gradient-to-br from-gray-50 via-white to-red-50 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-gray-50 via-white to-red-50 overflow-hidden pt-0">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute top-0 left-0 w-96 h-96 bg-red-600 rounded-full filter blur-3xl"></div>
@@ -16,7 +16,7 @@ export default function Hero() {
         </div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="py-16 lg:py-24">
+          <div className="py-8 lg:py-12">
             {/* Trust Badge */}
             <div className="flex justify-center mb-8">
               <div className="inline-flex items-center space-x-2 bg-red-50 border border-red-200 rounded-full px-6 py-2">
@@ -30,7 +30,7 @@ export default function Hero() {
               <div className="text-center lg:text-left animate-fade-in">
                 <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-black mb-6 leading-tight">
                   Newsline Media & Training Agency
-                  <span className="bg-gradient-to-r from-red-600 to-purple-600 bg-clip-text text-transparent block mt-2">
+                  <span className="text-black block mt-2">
                     Kenya&apos;s Leading Media, PR, IT Attachment Placement Center
                   </span>
                 </h1>
@@ -81,10 +81,20 @@ export default function Hero() {
 
               {/* Right Column - Mission Statement */}
               <div className="relative">
-                <div className="bg-white rounded-3xl shadow-2xl p-8 border-l-4 border-red-600">
-                  <div className="mb-6">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-2">Mission Statement</h3>
-                    <p className="text-sm text-red-600 font-semibold">From the Director — Faith Mukundi</p>
+                <div className="bg-white rounded-3xl shadow-2xl p-8 border-l-4 border-blue-600">
+                  <div className="flex flex-col items-center mb-6">
+                    <div className="relative w-40 h-40 rounded-full overflow-hidden flex-shrink-0 ring-4 ring-blue-100 mb-4">
+                      <Image
+                        src="/director.png"
+                        alt="Faith Mukundi - Managing Director"
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="text-center">
+                      <h3 className="text-2xl font-bold text-gray-900 mb-1">Mission Statement</h3>
+                      <p className="text-sm text-blue-600 font-semibold">From the Director — Faith Mukundi</p>
+                    </div>
                   </div>
                   
                   <div className="space-y-4 text-gray-700 leading-relaxed">
@@ -113,7 +123,7 @@ export default function Hero() {
       </section>
 
       {/* Stats Bar */}
-      <section className="bg-gradient-to-r from-red-600 to-red-700 py-12">
+      <section className="bg-black py-12">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div className="text-center">
@@ -121,28 +131,28 @@ export default function Hero() {
                 <Briefcase className="text-white" size={40} />
               </div>
               <div className="text-4xl font-bold text-white mb-2">8+</div>
-              <div className="text-red-100 font-medium">Industry Categories</div>
+              <div className="text-gray-300 font-medium">Industry Categories</div>
             </div>
             <div className="text-center">
               <div className="flex justify-center mb-3">
                 <Building2 className="text-white" size={40} />
               </div>
               <div className="text-4xl font-bold text-white mb-2">100+</div>
-              <div className="text-red-100 font-medium">Partner Companies</div>
+              <div className="text-gray-300 font-medium">Partner Companies</div>
             </div>
             <div className="text-center">
               <div className="flex justify-center mb-3">
                 <Users className="text-white" size={40} />
               </div>
               <div className="text-4xl font-bold text-white mb-2">500+</div>
-              <div className="text-red-100 font-medium">Students Placed</div>
+              <div className="text-gray-300 font-medium">Students Placed</div>
             </div>
             <div className="text-center">
               <div className="flex justify-center mb-3">
                 <Award className="text-white" size={40} />
               </div>
               <div className="text-4xl font-bold text-white mb-2">24/7</div>
-              <div className="text-red-100 font-medium">Support Available</div>
+              <div className="text-gray-300 font-medium">Support Available</div>
             </div>
           </div>
         </div>

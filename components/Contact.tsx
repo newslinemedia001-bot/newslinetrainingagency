@@ -20,7 +20,7 @@ export default function Contact() {
           <div className="space-y-8">
             <div className="bg-white rounded-2xl p-6 card-hover">
               <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 rounded-xl bg-red-600 flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 rounded-xl bg-blue-600 flex items-center justify-center flex-shrink-0">
                   <Mail className="text-white" size={24} />
                 </div>
                 <div>
@@ -40,7 +40,7 @@ export default function Contact() {
 
             <div className="bg-white rounded-2xl p-6 card-hover">
               <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 rounded-xl bg-red-600 flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 rounded-xl bg-blue-600 flex items-center justify-center flex-shrink-0">
                   <Phone className="text-white" size={24} />
                 </div>
                 <div>
@@ -71,7 +71,7 @@ export default function Contact() {
 
             <div className="bg-white rounded-2xl p-6 card-hover">
               <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 rounded-xl bg-red-600 flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 rounded-xl bg-blue-600 flex items-center justify-center flex-shrink-0">
                   <MapPin className="text-white" size={24} />
                 </div>
                 <div>
@@ -93,7 +93,7 @@ export default function Contact() {
 
             <div className="bg-white rounded-2xl p-6 card-hover">
               <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 rounded-xl bg-red-600 flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 rounded-xl bg-blue-600 flex items-center justify-center flex-shrink-0">
                   <Clock className="text-white" size={24} />
                 </div>
                 <div>
