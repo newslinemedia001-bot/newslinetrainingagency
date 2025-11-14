@@ -28,7 +28,7 @@ const partners = [
 
 export default function Partners() {
     return (
-        <section className="py-20 bg-white">
+        <section className="py-6 bg-white">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Section Header */}
                 <div className="text-center mb-16">
@@ -52,7 +52,7 @@ export default function Partners() {
                     {partners.map((partner, index) => (
                         <div
                             key={partner.name}
-                            className="group relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 flex items-center justify-center"
+                            className="group relative bg-white p-8 shadow-lg hover:shadow-2xl transition-all duration-300 flex items-center justify-center"
                             style={{ animationDelay: `${index * 100}ms` }}
                         >
                             <div className="relative w-full h-24 transition-all duration-300">
@@ -69,17 +69,17 @@ export default function Partners() {
 
                 {/* Partnership CTA */}
                 <div className="mt-16 text-center">
-                    <div className="bg-gradient-to-r from-red-50 to-purple-50 rounded-3xl p-12 border border-red-100">
-                        <h3 className="text-3xl font-bold text-gray-900 mb-4">
+                    <div className="bg-red-600 p-12">
+                        <h3 className="text-3xl font-bold text-white mb-4">
                             Become a Partner
                         </h3>
-                        <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+                        <p className="text-lg text-white mb-8 max-w-2xl mx-auto">
                             Join our network of industry-leading partners and help shape the future workforce.
                             Partner with us to access talented students and build lasting relationships.
                         </p>
                         <a
                             href="/#contact"
-                            className="inline-block bg-red-600 text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-red-700 transition-colors shadow-lg hover:shadow-xl"
+                            className="inline-block bg-white text-red-600 px-10 py-4 font-bold text-lg hover:bg-gray-100 transition-colors shadow-lg"
                         >
                             Partner With Us
                         </a>

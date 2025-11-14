@@ -287,6 +287,10 @@ export default function AdminPage() {
               <div className="text-white font-semibold">Content</div>
               <div className="text-white/70 text-xs mt-1">Gallery & Testimonials</div>
             </a>
+            <a href="/admin/blog" className="bg-white/10 hover:bg-white/20 rounded-lg p-4 text-center transition-colors">
+              <div className="text-white font-semibold">Blog</div>
+              <div className="text-white/70 text-xs mt-1">Manage Blog Posts</div>
+            </a>
             <a href="/" className="bg-white/10 hover:bg-white/20 rounded-lg p-4 text-center transition-colors">
               <div className="text-white font-semibold">View Site</div>
               <div className="text-white/70 text-xs mt-1">Public Homepage</div>

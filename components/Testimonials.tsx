@@ -60,9 +60,9 @@ export default function Testimonials() {
   }
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-6 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16 animate-fade-in">
+        <div className="text-center mb-12 animate-fade-in">
           <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
             Success <span className="text-red-600">Stories</span>
           </h2>

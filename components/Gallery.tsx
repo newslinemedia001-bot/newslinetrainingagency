@@ -63,7 +63,7 @@ export default function Gallery() {
 
   return (
     <>
-      <section className="py-20 bg-gray-50">
+      <section className="py-6 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 animate-fade-in">
             <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
@@ -78,7 +78,7 @@ export default function Gallery() {
             {images.map((image, index) => (
               <div
                 key={image.id}
-                className="relative aspect-square rounded-xl overflow-hidden cursor-pointer group shadow-md hover:shadow-xl transition-shadow"
+                className="relative aspect-square overflow-hidden cursor-pointer group shadow-md hover:shadow-xl transition-all duration-300"
                 style={{ animationDelay: `${index * 50}ms` }}
                 onClick={() => setSelectedImage(image)}
               >
@@ -86,7 +86,7 @@ export default function Gallery() {
                   src={image.imageUrl}
                   alt={image.title}
                   fill
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  className="object-cover transition-transform duration-300 group-hover:scale-110"
                 />
               </div>
             ))}
@@ -96,7 +96,7 @@ export default function Gallery() {
           <div className="text-center mt-12">
             <Link
               href="/gallery"
-              className="inline-flex items-center space-x-2 bg-red-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-red-700 transition-all shadow-lg hover:shadow-xl"
+              className="inline-flex items-center space-x-2 bg-red-600 text-white px-8 py-4 font-bold text-lg hover:bg-red-700 transition-all shadow-lg"
             >
               <span>View Full Gallery</span>
               <ArrowRight size={20} />
@@ -114,25 +114,14 @@ export default function Gallery() {
           >
             <X size={32} />
           </button>
-          <div className="max-w-4xl w-full" onClick={(e) => e.stopPropagation()}>
-            <div className="relative w-full h-[60vh]">
+          <div className="max-w-5xl w-full" onClick={(e) => e.stopPropagation()}>
+            <div className="relative w-full h-[80vh]">
               <Image
                 src={selectedImage.imageUrl}
-                alt={selectedImage.title}
+                alt="Gallery Image"
                 fill
                 className="object-contain"
               />
-            </div>
-            <div className="bg-white rounded-b-2xl p-6">
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">{selectedImage.title}</h3>
-              {selectedImage.description && (
-                <p className="text-gray-700">{selectedImage.description}</p>
-              )}
-              {selectedImage.category && (
-                <span className="inline-block px-3 py-1 bg-red-600 text-white text-sm rounded-full mt-3">
-                  {selectedImage.category}
-                </span>
-              )}
             </div>
           </div>
         </div>

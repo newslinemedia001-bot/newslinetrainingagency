@@ -18,13 +18,27 @@ export default function Header() {
   };
 
   return (
-    <header className="w-full bg-white shadow-sm overflow-hidden">
+    <header className="w-full bg-white shadow-sm overflow-hidden relative z-50">
       <div className="w-full">
-        {/* Banner Section */}
+        {/* Logo + Banner Section */}
         <div className="bg-white py-6 px-4">
-          <div className="hidden lg:flex items-center justify-center">
-            <Link href="/#apply" className="w-full max-w-7xl">
-              <div className="relative w-full h-40 overflow-hidden">
+          <div className="hidden lg:flex items-center justify-between gap-6 max-w-7xl mx-auto">
+            {/* Logo on Left */}
+            <Link href="/" className="flex-shrink-0">
+              <div className="relative w-64 h-40 bg-white p-4 shadow-lg">
+                <Image
+                  src="/newsline-logo.png"
+                  alt="Newsline"
+                  fill
+                  className="object-contain"
+                  priority
+                />
+              </div>
+            </Link>
+            
+            {/* Banner on Right */}
+            <Link href="/#apply" className="flex-1">
+              <div className="relative w-full h-48 overflow-hidden">
                 <Image
                   src="/banner.jpg"
                   alt="Newsline Training Agency - Attachment Opportunities"
@@ -38,27 +52,33 @@ export default function Header() {
         </div>
 
         {/* Navigation Bar Below Banner */}
-        <div className="bg-black">
+        <div className="bg-black relative z-50">
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center justify-center space-x-1 py-3">
-            <Link href="/" className="text-white hover:bg-gray-800 transition-colors font-semibold px-4 py-2 uppercase text-sm">
+          <nav className="hidden lg:flex items-center justify-center space-x-1 py-3 relative z-50">
+            <Link href="/" className="text-white hover:bg-gray-800 transition-colors font-semibold px-4 py-3 uppercase text-sm cursor-pointer block">
               Home
             </Link>
-            <Link href="/#categories" className="text-white hover:bg-gray-800 transition-colors font-semibold px-4 py-2 uppercase text-sm">
+            <Link href="/#categories" className="text-white hover:bg-gray-800 transition-colors font-semibold px-4 py-3 uppercase text-sm cursor-pointer block">
               Categories
             </Link>
-            <Link href="/#apply" className="text-white hover:bg-gray-800 transition-colors font-semibold px-4 py-2 uppercase text-sm">
+            <Link href="/#apply" className="text-white hover:bg-gray-800 transition-colors font-semibold px-4 py-3 uppercase text-sm cursor-pointer block">
               Apply Now
             </Link>
-            <Link href="/#contact" className="text-white hover:bg-gray-800 transition-colors font-semibold px-4 py-2 uppercase text-sm">
+            <Link href="/#contact" className="text-white hover:bg-gray-800 transition-colors font-semibold px-4 py-3 uppercase text-sm cursor-pointer block">
               Contact
             </Link>
-            <a href="https://newsline.co.ke" target="_blank" rel="noopener noreferrer" className="text-white hover:bg-gray-800 transition-colors font-semibold px-4 py-2 uppercase text-sm">
+            <a href="https://newsline.co.ke" target="_blank" rel="noopener noreferrer" className="text-white hover:bg-gray-800 transition-colors font-semibold px-4 py-3 uppercase text-sm cursor-pointer block">
               Newsline.co.ke
             </a>
-            <a href="https://radio.newsline.co.ke" target="_blank" rel="noopener noreferrer" className="text-white hover:bg-gray-800 transition-colors font-semibold px-4 py-2 uppercase text-sm">
+            <a href="https://radio.newsline.co.ke" target="_blank" rel="noopener noreferrer" className="text-white hover:bg-gray-800 transition-colors font-semibold px-4 py-3 uppercase text-sm cursor-pointer block">
               Newsline Radio
             </a>
+            <a href="https://www.youtube.com/@newslinetv-i3q" target="_blank" rel="noopener noreferrer" className="text-white hover:bg-gray-800 transition-colors font-semibold px-4 py-3 uppercase text-sm cursor-pointer block">
+              YouTube
+            </a>
+            <Link href="/blog" className="text-white hover:bg-gray-800 transition-colors font-semibold px-4 py-3 uppercase text-sm cursor-pointer block">
+              Blog
+            </Link>
             
             {user ? (
               <>
@@ -80,7 +100,7 @@ export default function Header() {
             ) : (
               <Link 
                 href="/auth/signin" 
-                className="bg-red-600 text-white px-6 py-2 font-bold hover:bg-red-700 transition-colors uppercase text-sm ml-2"
+                className="bg-red-600 text-white px-6 py-3 font-bold hover:bg-red-700 transition-colors uppercase text-sm ml-2 cursor-pointer"
               >
                 Sign In
               </Link>
@@ -182,6 +202,21 @@ export default function Header() {
               >
                 Newsline Radio
               </a>
+              <a 
+                href="https://www.youtube.com/@newslinetv-i3q" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-white hover:bg-gray-800 transition-colors font-semibold py-2 uppercase"
+              >
+                YouTube
+              </a>
+              <Link 
+                href="/blog" 
+                className="text-white hover:bg-gray-800 transition-colors font-semibold py-2 uppercase"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Blog
+              </Link>
               
               {user ? (
                 <>

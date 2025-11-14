@@ -8,32 +8,30 @@ export default function Hero() {
   return (
     <>
       {/* Main Hero Section */}
-      <section className="relative bg-gradient-to-br from-gray-50 via-white to-red-50 overflow-hidden pt-0">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-0 left-0 w-96 h-96 bg-red-600 rounded-full filter blur-3xl"></div>
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-600 rounded-full filter blur-3xl"></div>
-        </div>
+      <section className="relative bg-white overflow-hidden pt-0">
+
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="py-8 lg:py-12">
             {/* Trust Badge */}
             <div className="flex justify-center mb-8">
-              <div className="inline-flex items-center space-x-2 bg-red-50 border border-red-200 rounded-full px-6 py-2">
-                <Award className="text-red-600" size={20} />
-                <span className="text-sm font-semibold text-red-600">Kenya&apos;s Leading Training Agency</span>
+              <div className="inline-flex items-center space-x-3 bg-red-50 border-2 border-red-200 rounded-full px-10 py-4">
+                <Award className="text-red-600" size={28} />
+                <span className="text-lg font-bold text-red-600">Kenya&apos;s Leading Training Agency</span>
               </div>
             </div>
 
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               {/* Left Column - Content */}
               <div className="text-center lg:text-left animate-fade-in">
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-black mb-6 leading-tight">
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-black mb-6 leading-tight">
                   Newsline Media & Training Agency
-                  <span className="text-black block mt-2">
-                    Kenya&apos;s Leading Media, PR, IT Attachment Placement Center
-                  </span>
                 </h1>
+                <div className="bg-red-600 text-white px-8 py-6 mb-6 shadow-lg inline-block">
+                  <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold">
+                    Kenya&apos;s Leading Media, PR, IT Attachment Placement Center
+                  </h2>
+                </div>
 
                 <p className="text-xl text-gray-700 mb-8 leading-relaxed">
                   Join our comprehensive attachment programs across <span className="font-semibold text-red-600">Media, IT, Film Production</span>,
@@ -65,14 +63,14 @@ export default function Hero() {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                   <Link
                     href="/#apply"
-                    className="btn-primary text-white px-10 py-5 rounded-full font-bold text-lg flex items-center justify-center space-x-2 shadow-2xl hover:shadow-red-500/50 transition-all"
+                    className="btn-primary text-white px-10 py-5 font-bold text-lg flex items-center justify-center space-x-2 transition-all shadow-lg"
                   >
                     <span>Start Your Journey</span>
                     <ArrowRight size={22} />
                   </Link>
                   <Link
                     href="/#categories"
-                    className="bg-white border-2 border-gray-300 text-gray-800 px-10 py-5 rounded-full font-bold text-lg hover:border-red-600 hover:text-red-600 transition-all shadow-lg"
+                    className="bg-white text-gray-800 px-10 py-5 font-bold text-lg hover:bg-red-600 hover:text-white transition-all shadow-lg"
                   >
                     Explore Programs
                   </Link>
@@ -81,9 +79,9 @@ export default function Hero() {
 
               {/* Right Column - Mission Statement */}
               <div className="relative">
-                <div className="bg-white rounded-3xl shadow-2xl p-8 border-l-4 border-blue-600">
+                <div className="bg-white shadow-2xl p-8 border-l-4 border-blue-600">
                   <div className="flex flex-col items-center mb-6">
-                    <div className="relative w-40 h-40 rounded-full overflow-hidden flex-shrink-0 ring-4 ring-blue-100 mb-4">
+                    <div className="relative w-40 h-40 overflow-hidden flex-shrink-0 mb-4 shadow-lg">
                       <Image
                         src="/director.png"
                         alt="Faith Mukundi - Managing Director"
@@ -123,7 +121,7 @@ export default function Hero() {
       </section>
 
       {/* Stats Bar */}
-      <section className="bg-black py-12">
+      <section className="bg-black py-6">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div className="text-center">

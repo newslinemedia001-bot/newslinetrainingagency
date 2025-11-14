@@ -4,14 +4,14 @@ import { Target, Eye } from 'lucide-react';
 
 export default function Mission() {
   return (
-    <section className="py-12 bg-gradient-to-r from-gray-50 to-gray-100">
+    <section className="py-8 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-6">
           {/* Mission */}
-          <div className="bg-white rounded-2xl shadow-lg p-8 border-l-4 border-blue-600">
+          <div className="bg-gray-50 shadow-md p-8 border-l-4 border-red-600">
             <div className="flex items-start gap-4">
               <div className="flex-shrink-0">
-                <div className="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center">
+                <div className="w-12 h-12 bg-red-600 flex items-center justify-center">
                   <Target className="text-white" size={24} />
                 </div>
               </div>
@@ -25,10 +25,10 @@ export default function Mission() {
           </div>
 
           {/* Vision */}
-          <div className="bg-white rounded-2xl shadow-lg p-8 border-l-4 border-blue-600">
+          <div className="bg-gray-50 shadow-md p-8 border-l-4 border-red-600">
             <div className="flex items-start gap-4">
               <div className="flex-shrink-0">
-                <div className="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center">
+                <div className="w-12 h-12 bg-red-600 flex items-center justify-center">
                   <Eye className="text-white" size={24} />
                 </div>
               </div>

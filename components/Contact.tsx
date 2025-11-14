@@ -4,7 +4,7 @@ import { Mail, Phone, MapPin, Clock } from 'lucide-react';
 
 export default function Contact() {
   return (
-    <section id="contact" className="py-20 bg-gray-50">
+    <section id="contact" className="py-6 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16 animate-fade-in">
           <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
@@ -18,9 +18,9 @@ export default function Contact() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
           {/* Contact Information */}
           <div className="space-y-8">
-            <div className="bg-white rounded-2xl p-6 card-hover">
+            <div className="bg-white p-6 card-hover shadow-md">
               <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 rounded-xl bg-blue-600 flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 bg-blue-600 flex items-center justify-center flex-shrink-0">
                   <Mail className="text-white" size={24} />
                 </div>
                 <div>
@@ -38,9 +38,9 @@ export default function Contact() {
               </div>
             </div>
 
-            <div className="bg-white rounded-2xl p-6 card-hover">
+            <div className="bg-white p-6 card-hover shadow-md">
               <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 rounded-xl bg-blue-600 flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 bg-blue-600 flex items-center justify-center flex-shrink-0">
                   <Phone className="text-white" size={24} />
                 </div>
                 <div>
@@ -69,9 +69,9 @@ export default function Contact() {
               </div>
             </div>
 
-            <div className="bg-white rounded-2xl p-6 card-hover">
+            <div className="bg-white p-6 card-hover shadow-md">
               <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 rounded-xl bg-blue-600 flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 bg-blue-600 flex items-center justify-center flex-shrink-0">
                   <MapPin className="text-white" size={24} />
                 </div>
                 <div>
@@ -91,9 +91,9 @@ export default function Contact() {
               </div>
             </div>
 
-            <div className="bg-white rounded-2xl p-6 card-hover">
+            <div className="bg-white p-6 card-hover shadow-md">
               <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 rounded-xl bg-blue-600 flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 bg-blue-600 flex items-center justify-center flex-shrink-0">
                   <Clock className="text-white" size={24} />
                 </div>
                 <div>
@@ -109,12 +109,12 @@ export default function Contact() {
           </div>
 
           {/* Map */}
-          <div className="bg-white rounded-2xl p-2 shadow-lg">
+          <div className="bg-white p-2 shadow-lg">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.8196!2d36.8219!3d-1.2921!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMcKwMTcnMzEuNiJTIDM2wrA0OScxOC44IkU!5e0!3m2!1sen!2ske!4v1234567890"
               width="100%"
               height="100%"
-              style={{ border: 0, borderRadius: '1rem', minHeight: '500px' }}
+              style={{ border: 0, minHeight: '500px' }}
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"

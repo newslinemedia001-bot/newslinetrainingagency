@@ -39,7 +39,7 @@ const categoryIcons: { [key: string]: any } = {
 
 export default function Categories() {
   return (
-    <section id="categories" className="py-20 bg-gradient-to-br from-gray-50 via-white to-blue-50 relative overflow-hidden">
+    <section id="categories" className="py-6 bg-white">
       {/* Background Decoration */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-10 left-10 w-72 h-72 bg-red-600 rounded-full filter blur-3xl"></div>
@@ -66,11 +66,11 @@ export default function Categories() {
               <Link
                 key={category.id}
                 href="/#apply"
-                className="bg-white rounded-2xl p-6 shadow-md hover:shadow-2xl cursor-pointer group block border border-gray-100 hover:border-red-200 transition-all duration-300"
+                className="bg-white p-6 shadow-md hover:shadow-lg cursor-pointer group block transition-all duration-300"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 <div className="relative">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg">
+                  <div className="w-16 h-16 bg-red-600 flex items-center justify-center mb-4 group-hover:scale-105 transition-all duration-300">
                     <Icon className="text-white" size={32} />
                   </div>
                   <div className="absolute -top-1 -right-1 w-3 h-3 bg-blue-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
