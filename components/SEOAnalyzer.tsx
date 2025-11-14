@@ -68,6 +68,7 @@ export default function SEOAnalyzer({
   };
 
   const checks: SEOCheck[] = useMemo(() => {
+    // Helper functions are defined above and used here
     const keyword = focusKeyword.toLowerCase();
     const cleanContent = stripHtml(content).toLowerCase();
     const firstPara = getFirstParagraph(content).toLowerCase();
@@ -151,6 +152,7 @@ export default function SEOAnalyzer({
         message: keyword ? (cleanContent.includes(keyword) ? 'Keyword appears in content' : 'Use keyword naturally in content') : 'Set a focus keyword first'
       }
     ];
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [title, seoTitle, metaDescription, slug, content, focusKeyword]);
 
   const passedChecks = checks.filter(c => c.passed).length;

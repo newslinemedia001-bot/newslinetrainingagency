@@ -122,6 +122,7 @@ export default function AdminBlogPage() {
         content: '',
         featuredImage: '',
         author: 'Newsline Team',
+        category: '',
         published: true,
         seoTitle: '',
         metaDescription: '',
