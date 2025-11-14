@@ -78,32 +78,32 @@ export default function SEOAnalyzer({
     return [
       {
         label: 'Focus keyword in title',
-        passed: keyword && title.toLowerCase().includes(keyword),
+        passed: !!keyword && title.toLowerCase().includes(keyword),
         message: keyword ? (title.toLowerCase().includes(keyword) ? 'Great! Keyword found in title' : 'Add your focus keyword to the title') : 'Set a focus keyword first'
       },
       {
         label: 'Focus keyword in SEO title',
-        passed: keyword && seoTitle.toLowerCase().includes(keyword),
+        passed: !!keyword && seoTitle.toLowerCase().includes(keyword),
         message: keyword ? (seoTitle.toLowerCase().includes(keyword) ? 'Perfect! Keyword in SEO title' : 'Include keyword in SEO title') : 'Set a focus keyword first'
       },
       {
         label: 'Focus keyword in meta description',
-        passed: keyword && metaDescription.toLowerCase().includes(keyword),
+        passed: !!keyword && metaDescription.toLowerCase().includes(keyword),
         message: keyword ? (metaDescription.toLowerCase().includes(keyword) ? 'Excellent! Keyword in description' : 'Add keyword to meta description') : 'Set a focus keyword first'
       },
       {
         label: 'Focus keyword in URL',
-        passed: keyword && slug.toLowerCase().includes(keyword),
+        passed: !!keyword && slug.toLowerCase().includes(keyword),
         message: keyword ? (slug.toLowerCase().includes(keyword) ? 'Good! Keyword in URL slug' : 'Include keyword in URL slug') : 'Set a focus keyword first'
       },
       {
         label: 'Focus keyword in first paragraph',
-        passed: keyword && firstPara.includes(keyword),
+        passed: !!keyword && firstPara.includes(keyword),
         message: keyword ? (firstPara.includes(keyword) ? 'Nice! Keyword in opening' : 'Add keyword to first paragraph') : 'Set a focus keyword first'
       },
       {
         label: 'Keyword density (0.5-2.5%)',
-        passed: keyword && density >= 0.5 && density <= 2.5,
+        passed: !!keyword && density >= 0.5 && density <= 2.5,
         message: keyword ? (density >= 0.5 && density <= 2.5 ? `Perfect density: ${density.toFixed(2)}%` : `Current: ${density.toFixed(2)}% (aim for 0.5-2.5%)`) : 'Set a focus keyword first'
       },
       {
@@ -148,7 +148,7 @@ export default function SEOAnalyzer({
       },
       {
         label: 'Content has focus keyword',
-        passed: keyword && cleanContent.includes(keyword),
+        passed: !!keyword && cleanContent.includes(keyword),
         message: keyword ? (cleanContent.includes(keyword) ? 'Keyword appears in content' : 'Use keyword naturally in content') : 'Set a focus keyword first'
       }
     ];
