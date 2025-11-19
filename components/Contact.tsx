@@ -4,23 +4,27 @@ import { Mail, Phone, MapPin, Clock } from 'lucide-react';
 
 export default function Contact() {
   return (
-    <section id="contact" className="py-6 bg-white">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16 animate-fade-in">
-          <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
+    <section id="contact" className="py-6 bg-gray-50">
+      {/* Full Width Header */}
+      <div className="w-full bg-black py-12 mb-12 shadow-lg">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">
             Get in <span className="text-red-600">Touch</span>
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-300 max-w-2xl mx-auto">
             Have questions? We&apos;re here to help. Reach out to us through any of the channels below.
           </p>
         </div>
+      </div>
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
           {/* Contact Information */}
           <div className="space-y-8">
             <div className="bg-white p-6 card-hover shadow-md">
               <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 bg-blue-600 flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 bg-red-600 flex items-center justify-center flex-shrink-0">
                   <Mail className="text-white" size={24} />
                 </div>
                 <div>
@@ -40,7 +44,7 @@ export default function Contact() {
 
             <div className="bg-white p-6 card-hover shadow-md">
               <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 bg-blue-600 flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 bg-red-600 flex items-center justify-center flex-shrink-0">
                   <Phone className="text-white" size={24} />
                 </div>
                 <div>
@@ -71,7 +75,7 @@ export default function Contact() {
 
             <div className="bg-white p-6 card-hover shadow-md">
               <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 bg-blue-600 flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 bg-red-600 flex items-center justify-center flex-shrink-0">
                   <MapPin className="text-white" size={24} />
                 </div>
                 <div>
@@ -93,7 +97,7 @@ export default function Contact() {
 
             <div className="bg-white p-6 card-hover shadow-md">
               <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 bg-blue-600 flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 bg-red-600 flex items-center justify-center flex-shrink-0">
                   <Clock className="text-white" size={24} />
                 </div>
                 <div>

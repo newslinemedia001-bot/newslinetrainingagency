@@ -200,20 +200,28 @@ export default function ApplicationForm() {
   };
 
   return (
-    <section id="apply" className="py-6 bg-white">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-8 animate-fade-in">
-            <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
-              Apply for <span className="text-red-600">Attachment</span>
-            </h2>
-            <p className="text-lg text-gray-600">
-              Fill out the form below and we&apos;ll get back to you if an opportunity matches your profile.
-            </p>
-          </div>
+    <section id="apply" className="py-6 bg-gray-50">
+      {/* Full Width Header */}
+      <div className="w-full bg-black py-12 mb-8 shadow-lg">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">
+            Apply for <span className="text-red-600">Attachment</span>
+          </h2>
+          <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+            Fill out the form below and we&apos;ll get back to you if an opportunity matches your profile.
+          </p>
+        </div>
+      </div>
 
-          <form onSubmit={handleSubmit} className="bg-gray-50 p-6 shadow-md">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-3xl mx-auto">
+
+          <form onSubmit={handleSubmit} className="bg-gradient-to-br from-white to-gray-50 p-6 rounded-2xl shadow-xl border border-gray-200">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Section Header */}
+              <div className="md:col-span-2 bg-red-600 rounded-lg px-4 py-2 mb-4">
+                <h3 className="text-base font-bold text-white">Personal Information</h3>
+              </div>
               {/* Full Name */}
               <div>
                 <label htmlFor="fullName" className="block text-sm font-semibold text-gray-700 mb-2">
@@ -226,7 +234,7 @@ export default function ApplicationForm() {
                   required
                   value={formData.fullName}
                   onChange={handleChange}
-                  className="w-full px-4 py-3  border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all"
+                  className="w-full px-4 py-3  border-2 border-gray-300 rounded-lg focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all"
                   placeholder="John Doe"
                 />
               </div>
@@ -243,7 +251,7 @@ export default function ApplicationForm() {
                   required
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full px-4 py-3  border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all"
+                  className="w-full px-4 py-3  border-2 border-gray-300 rounded-lg focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all"
                   placeholder="john@example.com"
                 />
               </div>
@@ -260,9 +268,14 @@ export default function ApplicationForm() {
                   required
                   value={formData.phone}
                   onChange={handleChange}
-                  className="w-full px-4 py-3  border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all"
+                  className="w-full px-4 py-3  border-2 border-gray-300 rounded-lg focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all"
                   placeholder="+254 700 000000"
                 />
+              </div>
+
+              {/* Section Header */}
+              <div className="md:col-span-2 bg-red-600 rounded-lg px-4 py-2 mb-4 mt-4">
+                <h3 className="text-base font-bold text-white">Attachment Details</h3>
               </div>
 
               {/* Category */}
@@ -276,7 +289,7 @@ export default function ApplicationForm() {
                   required
                   value={formData.category}
                   onChange={handleChange}
-                  className="w-full px-4 py-3  border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all"
+                  className="w-full px-4 py-3  border-2 border-gray-300 rounded-lg focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all"
                 >
                   <option value="">Select a category</option>
                   {categories.map(category => (
@@ -299,7 +312,7 @@ export default function ApplicationForm() {
                     required
                     value={formData.subcategory}
                     onChange={handleChange}
-                    className="w-full px-4 py-3  border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all"
+                    className="w-full px-4 py-3  border-2 border-gray-300 rounded-lg focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all"
                   >
                     <option value="">Select a specialization</option>
                     {selectedCategory.subcategories.map((sub, idx) => (
@@ -310,6 +323,11 @@ export default function ApplicationForm() {
                   </select>
                 </div>
               )}
+
+              {/* Section Header */}
+              <div className="md:col-span-2 bg-red-600 rounded-lg px-4 py-2 mb-4 mt-4">
+                <h3 className="text-base font-bold text-white">Academic Background</h3>
+              </div>
 
               {/* Institution */}
               <div>
@@ -323,7 +341,7 @@ export default function ApplicationForm() {
                   required
                   value={formData.institution}
                   onChange={handleChange}
-                  className="w-full px-4 py-3  border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all"
+                  className="w-full px-4 py-3  border-2 border-gray-300 rounded-lg focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all"
                   placeholder="University/College name"
                 />
               </div>
@@ -340,7 +358,7 @@ export default function ApplicationForm() {
                   required
                   value={formData.course}
                   onChange={handleChange}
-                  className="w-full px-4 py-3  border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all"
+                  className="w-full px-4 py-3  border-2 border-gray-300 rounded-lg focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all"
                   placeholder="e.g., Computer Science"
                 />
               </div>
@@ -356,7 +374,7 @@ export default function ApplicationForm() {
                   required
                   value={formData.yearOfStudy}
                   onChange={handleChange}
-                  className="w-full px-4 py-3  border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all"
+                  className="w-full px-4 py-3  border-2 border-gray-300 rounded-lg focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all"
                 >
                   <option value="">Select year</option>
                   <option value="1st Year">1st Year</option>
@@ -379,7 +397,7 @@ export default function ApplicationForm() {
                   required
                   value={formData.availability}
                   onChange={handleChange}
-                  className="w-full px-4 py-3  border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all"
+                  className="w-full px-4 py-3  border-2 border-gray-300 rounded-lg focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all"
                 />
               </div>
 
@@ -395,7 +413,7 @@ export default function ApplicationForm() {
                     required
                     value={formData.duration}
                     onChange={handleChange}
-                    className="w-full px-4 py-3  border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all"
+                    className="w-full px-4 py-3  border-2 border-gray-300 rounded-lg focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all"
                   >
                     <option value="">Select duration</option>
                     <option value="1 month">1 month</option>
@@ -414,7 +432,7 @@ export default function ApplicationForm() {
                       required
                       value={flexibleWeeks}
                       onChange={(e) => setFlexibleWeeks(e.target.value)}
-                      className="w-full px-4 py-3  border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all"
+                      className="w-full px-4 py-3  border-2 border-gray-300 rounded-lg focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all"
                     />
                   )}
                 </div>
@@ -432,7 +450,7 @@ export default function ApplicationForm() {
                   value={formData.coverLetter}
                   onChange={handleChange}
                   rows={5}
-                  className="w-full px-4 py-3  border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all resize-none"
+                  className="w-full px-4 py-3  border-2 border-gray-300 rounded-lg focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition-all resize-none"
                   placeholder="Tell us about yourself, your skills, and why you're interested in this attachment..."
                 />
               </div>
@@ -551,7 +569,7 @@ export default function ApplicationForm() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full btn-primary text-white px-8 py-4 font-semibold text-lg flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-8 py-4 rounded-xl font-bold text-base flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg hover:shadow-xl"
               >
                 {isSubmitting ? (
                   <>

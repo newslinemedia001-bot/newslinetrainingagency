@@ -60,22 +60,26 @@ export default function Testimonials() {
   }
 
   return (
-    <section className="py-6 bg-white">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12 animate-fade-in">
-          <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
-            Success <span className="text-red-600">Stories</span>
+    <section className="py-6 bg-gray-50">
+      {/* Full Width Header */}
+      <div className="w-full bg-red-600 py-12 mb-12 shadow-lg">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">
+            Success <span className="text-black">Stories</span>
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg text-white max-w-2xl mx-auto">
             Voices from Our Community
           </p>
         </div>
+      </div>
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {testimonials.map((testimonial, index) => (
             <div
               key={testimonial.id}
-              className="bg-gray-50 rounded-2xl p-8 card-hover relative"
+              className="bg-white p-8 card-hover relative shadow-md border-2 border-gray-200"
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <Quote className="absolute top-4 right-4 text-red-600 opacity-20" size={48} />

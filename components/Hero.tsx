@@ -75,6 +75,8 @@ export default function Hero() {
                     Explore Programs
                   </Link>
                 </div>
+
+
               </div>
 
               {/* Right Column - Mission Statement */}
