@@ -34,6 +34,7 @@ const categoryIcons: { [key: string]: any } = {
   'web-development': Globe,
   'web-design': Layout,
   'networking': Network,
+  'information-technology': Monitor,
   'it-graphic-design': Layers,
 };
 
@@ -49,7 +50,7 @@ export default function Categories() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16 animate-fade-in">
           <div className="inline-flex items-center space-x-2 bg-red-50 border border-red-200 rounded-full px-6 py-2 mb-4">
-            <span className="text-sm font-semibold text-red-600">15+ Specializations Available</span>
+            <span className="text-sm font-semibold text-red-600">16+ Specializations Available</span>
           </div>
           <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
             Explore <span className="text-red-600">Our Categories</span>
