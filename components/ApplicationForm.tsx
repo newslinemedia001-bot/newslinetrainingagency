@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { categories } from '@/lib/categories';
-import { Send, Loader2, CheckCircle, Upload, FileText, X } from 'lucide-react';
+import { Send, Loader2, CheckCircle, Upload, FileText, X, AlertCircle } from 'lucide-react';
 import { db } from '@/lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
@@ -44,6 +44,7 @@ export default function ApplicationForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+  const [validationErrors, setValidationErrors] = useState<string[]>([]);
   const [flexibleWeeks, setFlexibleWeeks] = useState('');
   const [uploadingCV, setUploadingCV] = useState(false);
   const [uploadingCoverLetter, setUploadingCoverLetter] = useState(false);
@@ -62,6 +63,11 @@ export default function ApplicationForm() {
       // Reset subcategory if category changes
       ...(name === 'category' ? { subcategory: '' } : {})
     }));
+
+    // Clear validation errors when user starts fixing them
+    if (validationErrors.length > 0) {
+      setValidationErrors([]);
+    }
   };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, type: 'cv' | 'coverLetter') => {
@@ -83,7 +89,7 @@ export default function ApplicationForm() {
 
     const setUploading = type === 'cv' ? setUploadingCV : setUploadingCoverLetter;
     const setFileName = type === 'cv' ? setCvFileName : setCoverLetterFileName;
-    
+
     setUploading(true);
     setFileName(file.name);
 
@@ -129,11 +135,42 @@ export default function ApplicationForm() {
     }
   };
 
+  const validateForm = (): boolean => {
+    const errors: string[] = [];
+
+    if (!formData.fullName.trim()) errors.push('Full Name is required');
+    if (!formData.email.trim()) errors.push('Email Address is required');
+    if (!formData.phone.trim()) errors.push('Phone Number is required');
+    if (!formData.category) errors.push('Category is required');
+    if (selectedCategory?.subcategories && !formData.subcategory) errors.push('Specialization is required');
+    if (!formData.institution.trim()) errors.push('Institution is required');
+    if (!formData.course.trim()) errors.push('Course/Program is required');
+    if (!formData.yearOfStudy) errors.push('Year of Study is required');
+    if (!formData.availability) errors.push('Available From date is required');
+    if (!formData.duration) errors.push('Preferred Duration is required');
+    if (formData.duration === 'Flexible' && !flexibleWeeks) errors.push('Number of weeks is required for flexible duration');
+    if (!formData.coverLetter.trim()) errors.push('Cover letter is required');
+    if (!formData.consent) errors.push('You must consent to data collection');
+
+    setValidationErrors(errors);
+    return errors.length === 0;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
+    
+    // Clear previous errors
+    setValidationErrors([]);
     setSubmitStatus('idle');
     setErrorMessage('');
+
+    // Validate form
+    if (!validateForm()) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    setIsSubmitting(true);
 
     try {
       // Prepare duration with flexible weeks if applicable
@@ -187,6 +224,7 @@ export default function ApplicationForm() {
         setCvFileName('');
         setCoverLetterFileName('');
         setFlexibleWeeks('');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
         setSubmitStatus('error');
         setErrorMessage(data.error || 'Failed to submit application. Please try again.');
@@ -215,13 +253,31 @@ export default function ApplicationForm() {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">
-
           <form onSubmit={handleSubmit} className="bg-gradient-to-br from-white to-gray-50 p-6 rounded-2xl shadow-xl border border-gray-200">
+            
+            {/* Validation Errors */}
+            {validationErrors.length > 0 && (
+              <div className="mb-6 p-4 bg-red-50 border-2 border-red-200 rounded-lg">
+                <div className="flex items-start space-x-3">
+                  <AlertCircle className="text-red-600 flex-shrink-0 mt-0.5" size={24} />
+                  <div className="flex-1">
+                    <p className="font-bold text-red-800 mb-2">Please fix the following errors:</p>
+                    <ul className="list-disc list-inside space-y-1">
+                      {validationErrors.map((error, index) => (
+                        <li key={index} className="text-sm text-red-700">{error}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            )}
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Section Header */}
               <div className="md:col-span-2 bg-red-600 rounded-lg px-4 py-2 mb-4">
                 <h3 className="text-base font-bold text-white">Personal Information</h3>
               </div>
+
               {/* Full Name */}
               <div>
                 <label htmlFor="fullName" className="block text-sm font-semibold text-gray-700 mb-2">
@@ -422,7 +478,6 @@ export default function ApplicationForm() {
                     <option value="6 months">6 months</option>
                     <option value="Flexible">Flexible (specify weeks)</option>
                   </select>
-                  
                   {formData.duration === 'Flexible' && (
                     <input
                       type="number"
@@ -458,7 +513,7 @@ export default function ApplicationForm() {
               {/* CV Upload */}
               <div className="md:col-span-2">
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Upload CV/Resume * (PDF or Word, max 5MB)
+                  Upload CV/Resume (Optional - PDF or Word, max 5MB)
                 </label>
                 <div className="relative">
                   {!formData.cvUrl ? (
@@ -468,7 +523,6 @@ export default function ApplicationForm() {
                         accept=".pdf,.doc,.docx"
                         onChange={(e) => handleFileUpload(e, 'cv')}
                         className="hidden"
-                        required={!formData.cvUrl}
                       />
                       {uploadingCV ? (
                         <div className="flex items-center space-x-2 text-red-600">
@@ -479,7 +533,7 @@ export default function ApplicationForm() {
                         <div className="flex flex-col items-center space-y-2 text-gray-600">
                           <Upload size={32} />
                           <span className="font-semibold">Click to upload your CV</span>
-                          <span className="text-xs">PDF, DOC, or DOCX</span>
+                          <span className="text-xs">PDF, DOC, or DOCX (Optional)</span>
                         </div>
                       )}
                     </label>
