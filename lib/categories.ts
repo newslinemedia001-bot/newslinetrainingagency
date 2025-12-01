@@ -62,6 +62,10 @@ export const categories: Category[] = [
     name: 'Networking',
   },
   {
+    id: 'information-technology',
+    name: 'Information Technology',
+  },
+  {
     id: 'it-graphic-design',
     name: 'IT Graphic Design',
   },
