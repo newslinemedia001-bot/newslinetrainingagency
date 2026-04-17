@@ -3,20 +3,30 @@ import nodemailer from 'nodemailer';
 
 export async function POST(request: NextRequest) {
   try {
+    console.log('=== Application Submission Started ===');
+    
     const body = await request.json();
+    console.log('Received data:', { ...body, coverLetter: body.coverLetter?.substring(0, 50) + '...' });
 
     // Validate required fields
     const requiredFields = ['fullName', 'email', 'phone', 'category', 'institution', 'course', 'yearOfStudy', 'availability', 'duration', 'coverLetter', 'applicationId'];
     const missingFields = requiredFields.filter(field => !body[field]);
 
     if (missingFields.length > 0) {
+      console.error('Missing fields:', missingFields);
       return NextResponse.json(
         { error: `Missing required fields: ${missingFields.join(', ')}` },
         { status: 400 }
       );
     }
 
+    console.log('Checking email configuration...');
+    console.log('EMAIL_USER:', process.env.EMAIL_USER ? 'Set' : 'NOT SET');
+    console.log('EMAIL_APP_PASSWORD:', process.env.EMAIL_APP_PASSWORD ? 'Set' : 'NOT SET');
+    console.log('RECIPIENT_EMAIL:', process.env.RECIPIENT_EMAIL ? 'Set' : 'NOT SET');
+
     // Send email notification
+    console.log('Creating email transporter...');
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -24,6 +34,10 @@ export async function POST(request: NextRequest) {
         pass: process.env.EMAIL_APP_PASSWORD,
       },
     });
+
+    console.log('Verifying transporter...');
+    await transporter.verify();
+    console.log('Transporter verified successfully');
 
     const emailContent = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -71,12 +85,14 @@ export async function POST(request: NextRequest) {
       </div>
     `;
 
+    console.log('Sending email...');
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: process.env.RECIPIENT_EMAIL,
       subject: `New Attachment Application - ${body.fullName}`,
       html: emailContent,
     });
+    console.log('Email sent successfully');
 
     return NextResponse.json(
       { 
@@ -89,8 +105,16 @@ export async function POST(request: NextRequest) {
 
   } catch (error: any) {
     console.error('Error submitting application:', error);
+    console.error('Error details:', {
+      message: error.message,
+      code: error.code,
+      command: error.command
+    });
     return NextResponse.json(
-      { error: 'Failed to submit application. Please try again.' },
+      { 
+        error: 'Failed to submit application. Please try again.',
+        details: error.message 
+      },
       { status: 500 }
     );
   }
